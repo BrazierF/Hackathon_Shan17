@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 400px;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+    <script>
+	var map;
+	var infowindow;
+	var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	var labelIndex = 0;
+
+	function loadPoints() {
+          var diable = {id: 'diable', lat: 46.540344, lng: -72.753280};
+	  var auger = {id:'auger', lat: 46.540518, lng: -72.748123};
+	  var justice = {id:'justice', lat: 46.541789, lng: -72.745532};
+	  var lido = {id:'lido', lat: 46.561191, lng: -72.744417}
+	  var mcdo_1 = {id: 'burger', lat: 46.556636, lng: -72.751011}
+          var amphi = {id: 'fishing', lat: 51.775322, lng: -101.724806}
+
+	  pts = new Array();
+	  pts[0] = diable;
+	  pts[1] = auger;
+	  pts[2] = justice;
+	  pts[3] = lido;
+	  pts[4] = mcdo_1;
+          //pts[5] = amphi;
+
+          return pts;
+        }
+
+
+	function initMap() {
+          var bounds = new google.maps.LatLngBounds ();
+
+          pts = loadPoints();
+
+	  map = new google.maps.Map(document.getElementById('map'), {
+	    center: {lat: 46.5619, lng: -72.7435}, //center on shawinigan
+	    zoom: 12
+	  });
+
+	  infowindow = new google.maps.InfoWindow();
+	  var service = new google.maps.places.PlacesService(map);
+	  for(var i = 0; i < pts.length; i++) {
+            latlng = new google.maps.LatLng (pts[i].lat,pts[i].lng);
+            bounds.extend (latlng);
+	    service.nearbySearch({
+	      location: {lat: pts[i].lat, lng: pts[i].lng},
+	      radius: '30',
+	      name: pts[i].id
+	    }, callback);
+	  }
+          map.fitBounds (bounds);
+	}
+
+	function callback(results, status) {
+	  if (status === google.maps.places.PlacesServiceStatus.OK) {
+	    for (var i = 0; i < results.length; i++) {
+	      createMarker(results[i]);
+	    }
+	  }
+	}
+
+	function createMarker(place) {
+	  var marker = new google.maps.Marker({
+	    map: map,
+	    position: place.geometry.location,
+	    label: labels[labelIndex++]
+	  });
+
+	  google.maps.event.addListener(marker, 'click', function() {
+	    infowindow.setContent(place.name);
+	    infowindow.open(map, this);
+	  });
+	}
+
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <FORM>
+      <TEXTAREA name="nom" rows=4 cols=40 placeholder="Que souhaitez-vous faire?"></TEXTAREA>
+    </FORM>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk&signed_in=true&libraries=places&callback=initMap" async defer></script>
+  </body>
+</html>
