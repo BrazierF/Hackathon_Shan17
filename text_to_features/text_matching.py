@@ -176,7 +176,7 @@ def read_file(path):
 def write_file(path, ids, scores):
     with open(path, "w") as f:
         for s, id_ in zip(scores, ids):
-            f.writelines("%d : %.4f, %.4f\n"%(id_, s))
+            f.writelines("%d : %.4f\n"%(id_, s))
 
 if __name__ == '__main__':
 
