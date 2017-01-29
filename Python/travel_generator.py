@@ -245,7 +245,7 @@ def compute_tsp_tour(activities):
         current_node=closest_neighbour
         total_dist=total_dist+closest_distance
     
-    print 'Total_Dist:', total_dist
+#    print 'Total_Dist:', total_dist
     #compute tour
     sorted_activities=[None]*n
     for i in range(n):

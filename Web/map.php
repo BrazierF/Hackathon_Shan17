@@ -119,7 +119,7 @@
     <div class="form-group">
       <input type="hidden" id='request' name="request" placeholder="Que souhaitez-vous faire?"/>
 		<ul id="user_inputs">
-						<li><textarea class="user_inputs" data-position="0"
+						<li class="form-group row"><textarea class="user_inputs form-control" data-position="0"
 								id="user_inputs_0" rows="1" cols="50"></textarea></li>
 		</ul>
 
@@ -143,7 +143,7 @@
 				  //console.log(indice);
 				  var nvtext = e.currentTarget.value.substring(e.currentTarget.selectionStart);
 				  e.currentTarget.value = e.currentTarget.value.substring(0,e.currentTarget.selectionStart);
-				  $(e.target.parentNode).after('<li><textarea class="user_inputs" data-position="'+indice+'" id="user_inputs_'+indice+'" rows="1" cols="50">'+nvtext+'</textarea></li>');
+				  $(e.target.parentNode).after('<li class="form-group row"> <textarea class="user_inputs form-control" data-position="'+indice+'" id="user_inputs_'+indice+'" rows="1" cols="50">'+nvtext+'</textarea></li>');
 				    e.preventDefault();
 				    e.stopPropagation();
 				    mmh('#user_inputs_'+indice);
@@ -204,10 +204,10 @@
 			$('#ourForm').submit();
 		}
 		</script>
-      <label>Nombre de propositions</label>
-      <input name="nb" type="number" value = <?php echo (isset($_POST['nb']) ? $_POST['nb'] : 3 ) ?> min=0 max=10/>
-      <label>Durée du parcours</label>
-      <input name="max_duration" type="number" value=<?php echo (isset($_POST['max_duration']) ? $_POST['max_duration'] : 4 ) ?> min=0 max=10/>
+      <label class="col-form-label">Nombre de propositions</label>
+      <input name="nb" type="number" class="form-control"  value = <?php echo (isset($_POST['nb']) ? $_POST['nb'] : 3 ) ?> min=0 max=10/>
+      <label class="col-form-label" >Durée du parcours</label>
+      <input name="max_duration" class="form-control" type="number" value=<?php echo (isset($_POST['max_duration']) ? $_POST['max_duration'] : 4 ) ?> min=0 max=10/>
       <button type="button" onclick="sub()" class="btn btn-default">OK</button>
     </div>
     </FORM>
