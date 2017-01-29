@@ -6,13 +6,15 @@ VLieu historique national du Canada de l'Ancienne-Aluminerie-de-Shawinigan
 p2
 Vhistoire industrie culture aluminerie locale ancien nature riviere
 p3
+I0
 tp4
 a(I2
 VPatrimoine cult hist
 p5
 VGare ferroviaire patrimoniale du Canada
 p6
-Ntp7
+NI0
+tp7
 a(I3
 VPatrimoine cult hist
 p8
@@ -20,6 +22,7 @@ VPoste d'incendie et de police Numéro-Deux-de-Shawinigan
 p9
 Vbatiment culture patrimoine incendie pompier architecture
 p10
+I0
 tp11
 a(I4
 VPatrimoine cult hist
@@ -28,6 +31,7 @@ VAuberge Grand-Mère
 p13
 Vmonument histoire auberge batiment arbres nature 
 p14
+I0
 tp15
 a(I5
 VPatrimoine cult hist
@@ -36,6 +40,7 @@ VCité de l'Energie Musee
 p17
 Vvisite histoire culture science musee energie typique immanquable
 p18
+I48
 tp19
 a(I6
 VPatrimoine cult hist
@@ -44,6 +49,7 @@ VCentre d'exposition Léo-Ayotte de la Corporation culturelle de Shawinigan
 p21
 Vexposition art science patrimoine culture artiste technologie education informations connaissances 
 p22
+I0
 tp23
 a(I7
 VPatrimoine cult hist
@@ -52,6 +58,7 @@ VPont de Grand-Mère
 p25
 Vpont histoire culture science industrie ingenieur nature
 p26
+I0
 tp27
 a(I8
 VPatrimoine cult hist
@@ -60,13 +67,15 @@ VÉglise Notre-Dame-de-la-Présentation - Decor peint
 p29
 Veglise art peinture culture religion exposition
 p30
+I0
 tp31
 a(I9
 VPatrimoine cult hist
 p32
 VCentrale Shawinigan-2
 p33
-Ntp34
+NI0
+tp34
 a(I10
 VPatrimoine cult hist
 p35
@@ -74,6 +83,7 @@ VCentrale de Grand-Mère
 p36
 Vcentrale science energie histoire patrimoine nature industrie economie culture
 p37
+I0
 tp38
 a(I11
 VPatrimoine cult hist
@@ -82,6 +92,7 @@ VDomaine Beauséjour
 p40
 Vcoeur de la nature \u000aacces lac villegiature chasse \u000apeche architecture XIX siecle 
 p41
+I0
 tp42
 a(I12
 VPatrimoine cult hist
@@ -90,6 +101,7 @@ V"Hôtel de ville "
 p44
 Varchitecture service aux citoyens
 p45
+I0
 tp46
 a(I13
 VPatrimoine cult hist
@@ -98,6 +110,7 @@ V"Presbytère Notre-Dame-de-la-Présentation"
 p48
 Veglise catholique style romain peintures murales 
 p49
+I0
 tp50
 a(I14
 VPatrimoine cult hist
@@ -106,6 +119,7 @@ VÉglise anglicane St. Stephen
 p52
 Veglise christianisme 
 p53
+I0
 tp54
 a(I15
 VPatrimoine cult hist
@@ -114,19 +128,22 @@ VÉglise Saint-Bernard
 p56
 Veglise \u000apresbytere\u000aarchitecture gothique\u000aorgue\u000a
 p57
+I0
 tp58
 a(I16
 VPatrimoine cult hist
 p59
 V"Ancienne banque de Montréal"
 p60
-Ntp61
+NI0
+tp61
 a(I17
 VPatrimoine cult hist
 p62
 V"Ancien monastère des servantes de Jésus-Marie"
 p63
-Ntp64
+NI0
+tp64
 a(I18
 VEvenements WE
 p65
@@ -134,6 +151,7 @@ VTournoi de hockey novice-bantam de Saint-Georges
 p66
 Vsport\u000ahockey\u000ajunior\u000anovice\u000aSaint-Georges\u000apatins\u000aglace\u000amatch
 p67
+I0
 tp68
 a(I19
 VEvenements WE
@@ -142,6 +160,7 @@ VTournoi de hockey midget/junior Optimiste
 p70
 Vsport\u000ahockey\u000apatins\u000aglace\u000ajunior\u000amatch
 p71
+I0
 tp72
 a(I20
 VEvenements WE
@@ -150,6 +169,7 @@ VBaie-Comeau vs Cats
 p74
 Vequipe provincial\u000ahockey\u000ahiver\u000apatins\u000aglace\u000asport\u000aadulte\u000ajoueur\u000amatch
 p75
+I0
 tp76
 a(I21
 VEvenements WE
@@ -158,6 +178,7 @@ VClassique hivernale Broadway
 p78
 VCourse caritative activite pour enfants sport match epreuve billets
 p79
+I0
 tp80
 a(I22
 VEvenements WE
@@ -166,6 +187,7 @@ VRimouski vs Cats
 p82
 VSport match hockey billets spectacle spectateur
 p83
+I0
 tp84
 a(I23
 VEvenements WE
@@ -174,6 +196,7 @@ VTournoi de hockey novice de Shawinigan-Sud
 p86
 VTournoi hockey participants spectacle inscription participation
 p87
+I0
 tp88
 a(I24
 VEvenements WE
@@ -182,20 +205,23 @@ VRimouski vs Cats
 p90
 VSport match hockey billets spectacle spectateur
 p91
+I0
 tp92
 a(I25
 VEvenements WE
 p93
 V
 p94
-Ntp95
+NI0
+tp95
 a(I26
 Vresto
 p96
 VMicrobrasserie Le Trou du diable
 p97
-VMicrobrasserie, bistro, pub. Pub branche avec terrasse servant des mets raffinés et une liste de bieres maison et importees en rotation.
+VMicro-brasserie, bistrot, pub. Pub branche avec terrasse servant des mets raffinés et une liste de bieres bar maison et importees en rotation. Bar brasserie degustation apéritifs alcool burger
 p98
+I0
 tp99
 a(I27
 Vresto
@@ -204,14 +230,16 @@ VLe Radoteux
 p101
 Vrestaurant, bar, steak, fruits de mer, hamburger Restaurant moderne avec bar complet et terrasse offrant des hamburgers, des steaks et des fruits de mer. 
 p102
+I0
 tp103
 a(I28
 Vresto
 p104
 VLe Saint-Mo Bistro Gourmand
 p105
-VBistro, microbrasserie, cocktails. Ce bistro avec deux terrasses offrant des vues sur la riviere propose des mets reconfortants et des cocktails.
+VBistro, microbrasserie, cocktails. Ce bistro avec deux terrasses,  offrant des vues sur la riviere propose des mets reconfortants et des cocktails.
 p106
+I0
 tp107
 a(I29
 Vresto
@@ -220,6 +248,7 @@ VLe Globe Steakhouse
 p109
 VGrillades, steakhouse, hamburger, pizzas, Le seul authentique steakhouse à Shawinigan. Venez decouvrir nos steaks, cotes levees, grillades et nos tout nouveau fruits de mer. Grilladerie offrant des coupes de b\u0153uf et des vins divers et d'autres mets comme des hamburgers et des pizzas.
 p110
+I0
 tp111
 a(I30
 Vresto
@@ -228,6 +257,7 @@ VRestaurant Cité D'Angkor
 p113
 Vrestaurant cambodgien et thaïlandais
 p114
+I0
 tp115
 a(I31
 Vresto
@@ -236,6 +266,7 @@ VRestaurant La Pointe à Bernard
 p117
 VSuper bouffe authentique francaise bon choix de vin
 p118
+I0
 tp119
 a(I32
 Vresto
@@ -244,6 +275,7 @@ VRôtisserie St-Hubert
 p121
 VFast food poulet rapide frites chaine de restaurants efficace 
 p122
+I0
 tp123
 a(I33
 Vresto
@@ -252,6 +284,7 @@ VRestaurant Dragon Thai
 p125
 Vrestaurant thai thailandais asiatique
 p126
+I0
 tp127
 a(I34
 Vresto
@@ -260,6 +293,7 @@ VRestaurant agostinos
 p129
 Vrepas\u000asouper\u000adiner\u000alunch\u000adejeuner\u000abrunch\u000abouffe\u000afruits\u000a
 p130
+I0
 tp131
 a(I35
 Vresto
@@ -268,6 +302,7 @@ VStratos Pizzeria
 p133
 Vrestaurant, bouffe, manger, pizza, italien, cuisine
 p134
+I0
 tp135
 a(I36
 Vresto
@@ -276,6 +311,7 @@ VRestaurant St-Marc Déli
 p137
 Vrestaurant\u000abouffe\u000amanger\u000acuisine \u000adejeuner\u000asouper\u000adiner\u000alunch\u000arepas\u000afamilial\u000adeli\u000asandwich\u000acanadien\u000aitalien\u000agrec\u000abrunch\u000aalcool\u000apoulet\u000abrochette\u000aveau\u000afruit de mer\u000ahamburger\u000apizza\u000apita
 p138
+I0
 tp139
 a(I37
 Vresto
@@ -284,6 +320,7 @@ VRestaurant Chez Carmen
 p141
 Vrestaurant\u000abar\u000acuisine maison\u000atraiteur\u000arepas\u000alunch\u000asouper\u000adiner\u000amanger\u000abouffe\u000abuffet\u000adejeuner
 p142
+I0
 tp143
 a(I38
 Vresto
@@ -292,6 +329,7 @@ VCasa Grecque
 p145
 Vrestaurant, bouffe, manger, cuisine, grec, mediterranee
 p146
+I45
 tp147
 a(I39
 Vresto
@@ -300,6 +338,7 @@ VPizzeria 67
 p149
 Vrestaurant, bouffe, manger, pizza, italien, cuisine
 p150
+I0
 tp151
 a(I40
 Vresto
@@ -308,6 +347,7 @@ VAki Sushi Aki Thaï Shawinigan
 p153
 Vrestaurant, bouffe, nourriture, asiatique, sushi, thai
 p154
+I0
 tp155
 a(I41
 Vresto
@@ -316,6 +356,7 @@ VPacini
 p157
 Vrestaurant, bouffe, cuisine, italien
 p158
+I36
 tp159
 a(I42
 Vresto
@@ -324,6 +365,7 @@ VRestaurant Bravo L'Original
 p161
 Vrestaurant, italien, cuisine, bouffe, nourriture, manger
 p162
+I0
 tp163
 a(I43
 Vresto
@@ -332,6 +374,7 @@ VBianky Restaurant
 p165
 Vrestaurant, bouffe, diner, bar, manger, cuisine
 p166
+I36
 tp167
 a(I44
 Vresto
@@ -340,6 +383,7 @@ VRestaurant Olympic Pizzeria
 p169
 Vrestaurant, bouffe, nourriture, manger, pizza
 p170
+I45
 tp171
 a(I45
 Vresto
@@ -348,6 +392,7 @@ VFusée Shawinigan
 p173
 Vrestaurant, poulet, rotisserie, manger, cuisine, nourriture, bouffe
 p174
+I32
 tp175
 a(I46
 VParcs
@@ -356,6 +401,7 @@ VParc de l'ile Melville
 p177
 Vparc, espace, nature, arbre, camping, activite, ile, marina, bateau, sentier, randonnee, balade
 p178
+I43
 tp179
 a(I47
 VParcs
@@ -364,6 +410,7 @@ VParc Antoine St-Onge
 p181
 Vparc, piscine, air, espace, nature, arbre
 p182
+I0
 tp183
 a(I48
 VParcs
@@ -372,6 +419,7 @@ VParc du Saint-Maurice
 p185
 Vparc, riviere, nature, espace, sculpture
 p186
+I0
 tp187
 a(I49
 VParcs
@@ -380,6 +428,7 @@ VParc Trois-L
 p189
 Vparc, espace vert, nature, patinoire, ombre, respirer, herbe, etendue, arbres, nature
 p190
+I0
 tp191
 a(I50
 VParcs
@@ -388,5 +437,6 @@ VParc Bellevue
 p193
 V"parc, espace, nature, verdure, herbe, sport, bouger, courir, respirer, environnement, patinoire
 p194
+I0
 tp195
 a.

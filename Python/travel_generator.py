@@ -3,9 +3,10 @@
 
 # In[1]:
 
-import numpy as np,json
+import numpy as np
+import json
 import time as time
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 _columns = {
             'id':0,

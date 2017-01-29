@@ -2,7 +2,7 @@
 
 Usage:
   text_matching.py generate
-  text_matching.py <query>
+  text_matching.py loop
 
 """
 
@@ -18,24 +18,7 @@ import time
 import pickle
 import os
 
-TOKENIZER = WordPunctTokenizer()
-STEMMER = FrenchStemmer()
-WORD2VEC = word2vec.load('frWac_non_lem_no_postag_no_phrase_200_cbow_cut100.bin')
 
-with open("db.pkl", "r") as f:
-    res = pickle.load(f)
-
-IDs = [r[2] for r in res]
-TYPE = [r[1] for r in res]
-TAGS = [r[3] for r in res]
-
-IDs = [id_ for j,id_ in enumerate(IDs) if TAGS[j] is not None]
-TYPE = [id_ for j,id_ in enumerate(TYPE) if TAGS[j] is not None]
-TAGS = [t for j,t in enumerate(TAGS) if TAGS[j] is not None]
-
-TAGS = [unicodedata.normalize('NFKD', t).encode('ascii','ignore') for t in TAGS]
-TYPE = [unicodedata.normalize('NFKD', t).encode('ascii','ignore') for t in TYPE]
-IDs = [unicodedata.normalize('NFKD', t).encode('ascii','ignore') for t in IDs]
 
 def text_cleaning(tweet, stem=False):
     # Removing the 'start', 'end' markers
@@ -127,9 +110,9 @@ def get_list_of_words():
     all_tokens_name = []
     concat_descriptions = DESCRIPTIONS[:]
     concat_descriptions.extend(books)
-    concat_ids = IDs[:]
-    concat_ids.extend(["book" for i in range(len(books))])
-    for name, des in zip(concat_ids, concat_descriptions):
+    concat_NAMES = NAMES[:]
+    concat_NAMES.extend(["book" for i in range(len(books))])
+    for name, des in zip(concat_NAMES, concat_descriptions):
         # Cleaning
         clean_text = text_cleaning(des)
         # Tokenize
@@ -185,13 +168,44 @@ def get_features(selected_words):
         all_responses.append(responses)
     return all_responses
 
-DESCRIPTIONS = [text_cleaning(id_) + " " + text_cleaning(type_) + " " + text_cleaning(tag)
-                for id_, type_, tag in zip(IDs, TYPE, TAGS)]
+def read_file(path):
+    with open(path, "r") as f:
+        lines = f.readlines()
+    return lines
+
+def write_file(path, ids, scores):
+    with open(path, "w") as f:
+        for s, id_ in zip(scores, ids):
+            f.writelines("%d : %.4f\n"%(id_, s))
 
 if __name__ == '__main__':
 
     arguments = docopt(__doc__, version='0.1')
     print(arguments)
+
+    TOKENIZER = WordPunctTokenizer()
+    STEMMER = FrenchStemmer()
+    WORD2VEC = word2vec.load('frWac_non_lem_no_postag_no_phrase_200_cbow_cut100.bin')
+
+    with open("db.pkl", "r") as f:
+        res = pickle.load(f)
+
+    IDS = [r[0] for r in res]
+    NAMES = [r[2] for r in res]
+    TYPE = [r[1] for r in res]
+    TAGS = [r[3] for r in res]
+    GOOGLE_SCORES = [r[4] for r in res]
+
+    NAMES = [id_ for j,id_ in enumerate(NAMES) if TAGS[j] is not None]
+    TYPE = [id_ for j,id_ in enumerate(TYPE) if TAGS[j] is not None]
+    TAGS = [t for j,t in enumerate(TAGS) if TAGS[j] is not None]
+
+    TAGS = [unicodedata.normalize('NFKD', t).encode('ascii','ignore') for t in TAGS]
+    TYPE = [unicodedata.normalize('NFKD', t).encode('ascii','ignore') for t in TYPE]
+    NAMES = [unicodedata.normalize('NFKD', t).encode('ascii','ignore') for t in NAMES]
+
+    DESCRIPTIONS = [text_cleaning(id_) + " " + text_cleaning(type_) + " " + text_cleaning(tag)
+                for id_, type_, tag in zip(NAMES, TYPE, TAGS)]
 
     if arguments["generate"]:
         # Tokenize each description
@@ -216,42 +230,51 @@ if __name__ == '__main__':
             np.save("features_description.npy", all_responses)
 
     else:
-
         K = 10
 
         with open("counters.pkl", "r") as f:
             counters, sum_per_counters = pickle.load(f)
         all_responses = np.load("features_description.npy")
 
-        start = time.time()
-        QUERY = arguments["<query>"]
+        while True:
+            query_file = os.listdir("queries/")
+            if query_file:
+                time.sleep(0.25)
+                # Read file
+                queries = read_file("queries/"+query_file[0])
+                os.remove("queries/"+query_file[0])
+                for count, QUERY in enumerate(queries):
+                    cleaned_query = text_cleaning(QUERY)
+                    # Tokenize
+                    tokens_query = TOKENIZER.tokenize(cleaned_query)
+                    # Stemming
+                    #stems_query = [STEMMER.stem(tok) for tok in tokens_query]
+                    # TF IDF
+                    #if False:
+                    #    cnt_query = Counter(stems_query)
+                    #    tfidf_query = [tfidf(w, cnt_query, np.sum(cnt_query.values()), counters) for w in stems_query]
+                    #    index_query = np.argsort(tfidf_query)[-K:]
+                    #    words_of_interest_query = [stems_query[k] for k in index_query]
+                    #    final_words_query = list(set(find_original_word(words_of_interest_query, tokens_query)))
+                    #    print final_words_query
+                    # Features
+                    features_query = get_features([tokens_query])[0]
+                    end = time.time()
 
-        cleaned_query = text_cleaning(QUERY)
-        # Tokenize
-        tokens_query = TOKENIZER.tokenize(cleaned_query)
-        # Stemming
-        #stems_query = [STEMMER.stem(tok) for tok in tokens_query]
-        # TF IDF
-        #if False:
-        #    cnt_query = Counter(stems_query)
-        #    tfidf_query = [tfidf(w, cnt_query, np.sum(cnt_query.values()), counters) for w in stems_query]
-        #    index_query = np.argsort(tfidf_query)[-K:]
-        #    words_of_interest_query = [stems_query[k] for k in index_query]
-        #    final_words_query = list(set(find_original_word(words_of_interest_query, tokens_query)))
-        #    print final_words_query
-        # Features
-        features_query = get_features([tokens_query])[0]
-        end = time.time()
+                    feat_query = np.mean(features_query, axis=0)
 
-        feat_query = np.mean(features_query, axis=0)
+                    correlation_scores = np.array([np.mean([np.corrcoef(feat_description, feat_query)[0,1] for feat_description in responses])
+                                                   for responses in all_responses])
+                    topsort = np.argsort(correlation_scores)
+                    matches = [(NAMES[k], correlation_scores[k]) for k in topsort[::-1]]
 
-        correlation_scores = np.array([np.mean([np.corrcoef(feat_description, feat_query)[0,1] for feat_description in responses])
-                                       for responses in all_responses])
-        topsort = np.argsort(correlation_scores)[-25:]
-        matches = [(IDs[k], correlation_scores[k]) for k in topsort[::-1]]
+                    for match in matches:
+                        print QUERY, ":\t\t", match[0][0:15], "\t%.4f"%match[1]
+                    print "\n"
+                    write_file("scores/out_%d.txt"%count, IDS, correlation_scores)
+            else:
+                print "Waiting..."
+                time.sleep(1)
 
-        for match in matches:
-            print QUERY, ":\t\t", match[0][0:15], "\t%.4f"%match[1]
-        print "\n"
 
 	

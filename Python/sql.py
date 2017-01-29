@@ -32,14 +32,15 @@ def recuperer():
                                   host='127.0.0.1',
                                   database='hackathon2017')
     cursor = cnx.cursor()
-    query = ("(SELECT * FROM lieux "
-             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
-             "(SELECT * FROM lieux "
-             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
-             "(SELECT * FROM lieux "
-             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
-             "(SELECT * FROM lieux "
-             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
+#    query = ("(SELECT * FROM lieux "
+#             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
+#             "(SELECT * FROM lieux "
+#             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
+#             "(SELECT * FROM lieux "
+#             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
+#             "(SELECT * FROM lieux "
+#             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
+    query = ("SELECT * FROM lieux ORDER BY id ASC")
     
    # hire_start = datetime.date(1999, 1, 1)
     #hire_end = datetime.date(1999, 12, 31)
@@ -48,7 +49,6 @@ def recuperer():
     res=[]
     #row = dict(zip(cursor.column_names, cursor.fetchone()))
     row = cursor.fetchone()
-    
     while row is not None:
         #print(row)
         #row = dict(zip(cursor.column_names, cursor.fetchone()))
@@ -198,49 +198,12 @@ def ajouter(filename):
         cursor.close()
         cnx.close()
         
-def recuperer():
-    cnx = mysql.connector.connect(user='Hackathon', password='Python2.7',
-                                  host='127.0.0.1',
-                                  database='hackathon2017')
-    cursor = cnx.cursor()
-    query = ("(SELECT * FROM lieux "
-             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
-             "(SELECT * FROM lieux "
-             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
-             "(SELECT * FROM lieux "
-             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
-             "(SELECT * FROM lieux "
-             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
-    
-   # hire_start = datetime.date(1999, 1, 1)
-    #hire_end = datetime.date(1999, 12, 31)
-    
-    cursor.execute(query)
-    res=[]
-    #row = dict(zip(cursor.column_names, cursor.fetchone()))
-    row = cursor.fetchone()
-    
-    while row is not None:
-        #print(row)
-        #row = dict(zip(cursor.column_names, cursor.fetchone()))
-        act = Activity(row[2],row[4],row[5])
-        act.set_base_columns(row)
-        res.append(act)
-        #act.afficher()
-        row = cursor.fetchone()
-    #for item in cursor:
-     #     print item
-    #print cursor.fetchall()    
-    cursor.close()
-    cnx.close()
-    return res
-
 def recupererlo():
     cnx = mysql.connector.connect(user='Hackathon', password='Python2.7',
                                   host='127.0.0.1',
                                   database='hackathon2017')
     cursor = cnx.cursor()
-    query = ("SELECT id,type,nom,tags FROM lieux ")
+    query = ("SELECT id,type,nom,tags,score FROM lieux ")
     
    # hire_start = datetime.date(1999, 1, 1)
     #hire_end = datetime.date(1999, 12, 31)
@@ -251,7 +214,7 @@ def recupererlo():
     row = cursor.fetchone()
     
     while row is not None:
-        #print(row)
+        print(row)
         #row = dict(zip(cursor.column_names, cursor.fetchone()))
 #        act = Activity(row[2],row[4],row[5])
 #        act.set_base_columns(row)
