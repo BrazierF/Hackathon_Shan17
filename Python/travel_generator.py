@@ -20,6 +20,13 @@ _columns = {
             'vecteur':10,
             'extra':11}
             
+_type = {
+          'Parcs':0,
+          'resto':1,
+          'Evenements WE':2,
+          'Patrimoine cult hist':3
+          }
+            
 
 class Activity: #activity
     #constructor    
@@ -91,6 +98,8 @@ def journey_optimizer_master(activity_set, tMax, nBest):
     #Activity_set is a list of activities
     #assume scores are weighted to reflect user's preferences for each type of activity
     n=len(activity_set)
+    nType= 4 #only 4 different types ID in the DataBase as of now
+    
     #objective: find a subset of activities that maximise total score
     #while respecting some time constraint
     # => this is a knapsack problem
@@ -114,7 +123,80 @@ def journey_optimizer_master(activity_set, tMax, nBest):
 
     return compute_tsp_tour(actiSelected)
 
+def journey_optimizer_stochastic(activity_set, tMax, nBest):
+    
+    nType=4
+    discount = [0.5, 0.2, 0.2, 0.7] #discount factors, used to limit the number of events of the same type
+    #seperate activities by type (so we don't have three restaurants in a proposition)
+    activitiesByType=[[]]*nType
+    scoreByType=[[]]*nType
+    softmaxByType=[[]]*nType
 
+    nbPerType=[0]*nType
+    for a in activity_set:
+        activitiesByType[_type[a.type]].append(a)
+        scoreByType[_type[a.type]].append(a.score / 100.0) #dividing scores by 100 makes the softmax more stable
+        nbPerType[_type[a.type]] = nbPerType[_type[a.type]]+1
+    
+    #sort each activity set by decreasing score value
+    for k in range(nType):
+        activitiesByType[k] = sorted(activitiesByType[k], key=lambda x: -x.score)
+        scoreByType[k] = sorted(scoreByType[k], key=lambda x: -x)
+    
+    #compute softmax values for scores
+    for k in range(nType):
+        softmaxByType[k] = np.exp(scoreByType[k]) / np.sum(np.exp(scoreByType[k]))
+    
+    #now generate random journeys, with at most one restaurant, one parcs, one buildings (if enough time) and one event 
+    activities=[]
+
+    start=time.time()
+    while(time.time()-start<0.5):
+        acti=[]
+        
+        #generate one activity per type, using the softmax values as the probability of choosing each element among a class
+        for k in range(nType):
+            r=np.random.rand()
+            for i in range(nbPerType[k]):
+                if(r<softmaxByType[k][i]):
+                    acti.append(activitiesByType[k][i])
+                    break
+                else:
+                    r=r-softmaxByType[k][i]
+        
+        #now, compute the total duration and total score of this journey
+        sTot=0.0
+        tTot=0.0
+        for a in acti:
+            tTot=tTot+a.duration
+            sTot=sTot+a.score
+            if tTot>tMax:
+                #proposed journey is too long: discard it
+                break
+        
+        if tTot>tMax:
+            continue #proposed journey is too long: discard it
+        else:
+            activities.append((acti,sTot)) #keep journey    
+    
+    #sort journeys by decreasing total score
+    nbJourneys=len(activities)
+    if nbJourneys==0:
+        return []
+    
+    activities=sorted(activities, key=lambda x: -x[1])
+    
+    #only keep the nBest journeys, if they exist
+    activities=[activities[i] for i in range(np.min([nbJourneys, nBest]))]
+    
+    #finally, sort the remaining journeys, by computing their TSP tour approximations
+    activities_sorted=activities
+    for i in range(len(activities)):
+        activities_sorted[i] = compute_tsp_tour(activities[i][0])
+    
+    return activities
+    
+    
 # In[ ]:
 
 def compute_tsp_tour(activities):
@@ -126,7 +208,6 @@ def compute_tsp_tour(activities):
     
     for i in range(n):
         for j in range(i+1,n):
-            #dist[i,j] = np.sqrt( np.square(activities[i].x_coord-activities[j].x_coord) + np.square(activities[i].y_coord-activities[j].y_coord))
             dist[i,j] = activities[i].distance(activities[j])
             dist[j,i] = dist[i,j]
 
