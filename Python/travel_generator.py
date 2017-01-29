@@ -3,7 +3,8 @@
 
 # In[1]:
 
-import numpy as np,json
+import numpy as np
+import json
 import time as time
 
 _columns = {

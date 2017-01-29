@@ -240,7 +240,7 @@ def recupererlo():
                                   host='127.0.0.1',
                                   database='hackathon2017')
     cursor = cnx.cursor()
-    query = ("SELECT id,type,nom,tags FROM lieux ")
+    query = ("SELECT id,type,nom,tags,score FROM lieux ")
     
    # hire_start = datetime.date(1999, 1, 1)
     #hire_end = datetime.date(1999, 12, 31)
@@ -251,7 +251,7 @@ def recupererlo():
     row = cursor.fetchone()
     
     while row is not None:
-        #print(row)
+        print(row)
         #row = dict(zip(cursor.column_names, cursor.fetchone()))
 #        act = Activity(row[2],row[4],row[5])
 #        act.set_base_columns(row)
@@ -266,7 +266,7 @@ def recupererlo():
     cursor.close()
     cnx.close()
     return res
-#recupererlo()
+recupererlo()
 #ajouter('Patrimoine cult hist.csv')
 #ajouter('Evenements WE.csv')
 #ajouter('resto.csv')
