@@ -173,10 +173,10 @@ def read_file(path):
         lines = f.readlines()
     return lines
 
-def write_file(path, ids, scores, gscores):
+def write_file(path, ids, scores):
     with open(path, "w") as f:
-        for s, gs, id_ in zip(scores, gscores, ids):
-            f.writelines("%d : %.4f, %.4f\n"%(id_, s, gs))
+        for s, id_ in zip(scores, ids):
+            f.writelines("%d : %.4f, %.4f\n"%(id_, s))
 
 if __name__ == '__main__':
 
@@ -271,7 +271,7 @@ if __name__ == '__main__':
                     for match in matches:
                         print QUERY, ":\t\t", match[0][0:15], "\t%.4f"%match[1]
                     print "\n"
-                    write_file("scores/out_%d.txt"%count, IDS, correlation_scores, GOOGLE_SCORES)
+                    write_file("scores/out_%d.txt"%count, IDS, correlation_scores)
             else:
                 print "Waiting..."
                 time.sleep(1)
