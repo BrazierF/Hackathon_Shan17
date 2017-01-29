@@ -188,7 +188,7 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
         else:
             #journey respects the time constraint
             activities.append((acti,sTot))
-        iter=iter+1
+            iter=iter+1
         
     #sort journeys by decreasing total score
     nbJourneys=len(activities)
