@@ -31,43 +31,35 @@ def recuperer():
                                   database='hackathon2017')
     cursor = cnx.cursor()
     query = ("SELECT * FROM lieux "
-             "WHERE type='Patrimoine cult hist' UNION "
+             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL UNION LIMIT 2 "
              "SELECT * FROM lieux "
-             "WHERE type='Evenements WE' UNION "
+             "WHERE type='Evenements WE' AND lat IS NOT NULL UNION LIMIT 2  "
              "SELECT * FROM lieux "
-             "WHERE type='resto' UNION "
+             "WHERE type='resto' AND lat IS NOT NULL UNION LIMIT 2  "
              "SELECT * FROM lieux "
-             "WHERE type='Parcs' ")
+             "WHERE type='Parcs' LIMIT 2 ")
     
-    hire_start = datetime.date(1999, 1, 1)
-    hire_end = datetime.date(1999, 12, 31)
+   # hire_start = datetime.date(1999, 1, 1)
+    #hire_end = datetime.date(1999, 12, 31)
     
     cursor.execute(query)
+    res=[]
     #row = dict(zip(cursor.column_names, cursor.fetchone()))
     row = cursor.fetchone()
+    res.append(row)
     while row is not None:
         #print(row)
         #row = dict(zip(cursor.column_names, cursor.fetchone()))
         act = Activity(row[2],row[4],row[5])
         act.set_base_columns(row)
-        adresse = act.adresse
-        if adresse.find(u'°') != -1:
-            print adresse
-            coords = adresse.split(',')
-            lat =  [int(s[:-1]) for s in coords[0].split()[:-1] if s[:-1].isdigit()]
-            lat = lat[0] + lat[1]/60.0 + lat[2]/60.0/60.0
-            lon =  [int(s[:-1]) for s in coords[1].split()[:-1] if s[:-1].isdigit()]
-            lon = lon[0] + lon[1]/60.0 + lon[2]/60.0/60.0
-            act.x_coord=lat
-            act.y_coord=lon
-            act.adresse = ''
-        act.act_print()
+        act.afficher()
         row = cursor.fetchone()
     #for item in cursor:
      #     print item
     #print cursor.fetchall()    
     cursor.close()
     cnx.close()
+    return res
 
 def parser(filename,cursor):    
     return
@@ -202,8 +194,8 @@ def ajouter(filename):
         cursor.close()
         cnx.close()
 
-ajouter('Patrimoine cult hist.csv')
-ajouter('Evenements WE.csv')
-ajouter('resto.csv')
-ajouter('Parcs.csv')
-#recuperer()
+#ajouter('Patrimoine cult hist.csv')
+#ajouter('Evenements WE.csv')
+#ajouter('resto.csv')
+#ajouter('Parcs.csv')
+recuperer()
