@@ -7,12 +7,12 @@ Created on Sat Jan 28 14:10:59 2017
 import mysql.connector, datetime,os,travel_generator,googlemaps
 from datetime import datetime
 
-gmaps = googlemaps.Client(key='AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk')
+#gmaps = googlemaps.Client(key='AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk')
 
 # Geocoding an address
-geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
-print geocode_result
-print geocode_result[0]['formatted_address']
+#geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+#print geocode_result
+#print geocode_result[0]['formatted_address']
 # Look up an address with reverse geocoding
 #reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
 
@@ -30,14 +30,14 @@ def recuperer():
                                   host='127.0.0.1',
                                   database='hackathon2017')
     cursor = cnx.cursor()
-    query = ("SELECT * FROM lieux "
-             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL UNION LIMIT 2 "
-             "SELECT * FROM lieux "
-             "WHERE type='Evenements WE' AND lat IS NOT NULL UNION LIMIT 2  "
-             "SELECT * FROM lieux "
-             "WHERE type='resto' AND lat IS NOT NULL UNION LIMIT 2  "
-             "SELECT * FROM lieux "
-             "WHERE type='Parcs' LIMIT 2 ")
+    query = ("(SELECT * FROM lieux "
+             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
+             "(SELECT * FROM lieux "
+             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
+             "(SELECT * FROM lieux "
+             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
+             "(SELECT * FROM lieux "
+             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
     
    # hire_start = datetime.date(1999, 1, 1)
     #hire_end = datetime.date(1999, 12, 31)
@@ -46,12 +46,13 @@ def recuperer():
     res=[]
     #row = dict(zip(cursor.column_names, cursor.fetchone()))
     row = cursor.fetchone()
-    res.append(row)
+    
     while row is not None:
         #print(row)
         #row = dict(zip(cursor.column_names, cursor.fetchone()))
         act = Activity(row[2],row[4],row[5])
         act.set_base_columns(row)
+        res.append(act)
         act.afficher()
         row = cursor.fetchone()
     #for item in cursor:
@@ -198,4 +199,3 @@ def ajouter(filename):
 #ajouter('Evenements WE.csv')
 #ajouter('resto.csv')
 #ajouter('Parcs.csv')
-recuperer()

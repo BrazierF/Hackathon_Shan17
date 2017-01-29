@@ -57,15 +57,15 @@ class Activity: #activity
  
         
         #position
-        self.lat =row[_columns['lat']] #x coordinate
-        self.lng = row[_columns['lon']] #y coordinate
+        self.lat =float(row[_columns['lat']]) #x coordinate
+        self.lng = float(row[_columns['lon']]) #y coordinate
         
     def afficher(self):
          print self.name+' ('+str(self.lat)+','+str(self.lng)+')'
 
     def distance(self,b):
-        return np.sqrt( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord)) #euclidean distance
-        return 1.852 * 60 * np.arccos(np.sin(self.lat)*np.sin(b.lat)+np.cos(self.lat)*np.cos(b.lat)*cos(self.lng-b.lng)) #bird-fly distance, in km, using GPS coordinates
+        #return np.sqrt( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord)) #euclidean distance
+        return 1.852 * 60.0 * np.arccos(np.sin(self.lat * np.pi / 180.)*np.sin(b.lat* np.pi / 180.)+np.cos(self.lat* np.pi / 180.)*np.cos(b.lat* np.pi / 180.)*np.cos((self.lng-b.lng)* np.pi / 180.)) #bird-fly distance, in km, using GPS coordinates
         #return ( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord))
 
 
@@ -75,7 +75,7 @@ def journey_optimizer_master(activity_set, tMax, nBest):
     
     #Activity_set is a list of activities
     #assume scores are weighted to reflect user's preferences for each type of activity
-    
+    n=len(activity_set)
     #objective: find a subset of activities that maximise total score
     #while respecting some time constraint
     # => this is a knapsack problem
@@ -87,17 +87,17 @@ def journey_optimizer_master(activity_set, tMax, nBest):
     #greedily add activities as long as the total duration is less than the max allowed
     t_tot=0.0
     nbActiSelected=0
-    while(t_tot<=tMax):
+    while(t_tot<=tMax and nbActiSelected<n):
         if (t_tot+activities[nbActiSelected].duration <= tMax):
             #add item
-            nbActiSelected=nbActiSelected+1
             t_tot=t_tot+activities[nbActiSelected].duration
+            nbActiSelected=nbActiSelected+1
         else:
             break
     
     actiSelected = [activities[i] for i in range(nbActiSelected)]
 
-    return actiSelected
+    return compute_tsp_tour(actiSelected)
 
 
 # In[ ]:
