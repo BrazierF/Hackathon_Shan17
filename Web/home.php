@@ -9,7 +9,8 @@ $output=array();?>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">			
 <link rel="stylesheet" href=" http://192.168.199.109/Hackathon/Web/map.css">
-    <title>Place searches</title>
+<link rel="icon" href="http://192.168.199.109/Hackathon/Web/logo_s.jpg">
+    <title>ShawiniGo</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
