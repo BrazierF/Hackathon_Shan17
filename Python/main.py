@@ -12,10 +12,13 @@ def main(text,tMax,nBest):
     activity_set = recuperer()
     resultat = journey_optimizer_master(activity_set, tMax, nBest) 
     printable  = '['
-    for x in resultat:
-        printable += x.toJSON()+','
-    printable = printable[:-1]
-    print printable+']'
+    print resultat
+    if len(resultat)>0:
+        for x in resultat:
+            print x.toJSON()
+            printable += x.toJSON()+','
+        printable = printable[:-1]
+        print printable+']'
 
 if __name__ == "__main__":
     from sql import *
@@ -24,4 +27,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 : 
         main(sys.argv[1],sys.argv[2],sys.argv[3])
     else:
-        main('',6,1)
+        main('',6*60,1)

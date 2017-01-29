@@ -13,9 +13,12 @@ _columns = {
             'adresse':3,
             'lat':4,
             'lon':5,
-            'description':6,
-            'vecteur':7,
-            'extra':8}
+            'duration':6,
+            'score':7,
+            'description':8,
+            'tags':9,
+            'vecteur':10,
+            'extra':11}
             
 
 class Activity: #activity
@@ -55,6 +58,14 @@ class Activity: #activity
         #description
         self.description=row[_columns['description']]
  
+        #duration
+        self.duration = float(row[_columns['duration']])
+        
+        #tags
+        self.tags = row[_columns['tags']]
+        
+        #score
+        self.score = row[_columns['score']]
         
         #position
         self.lat =float(row[_columns['lat']]) #x coordinate
