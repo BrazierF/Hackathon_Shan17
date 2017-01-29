@@ -212,7 +212,7 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     
     activities=[]
     for i in range(len(activities_sorted)):
-        print 'Score', activities_sorted[i][1],  'Dist', activities_sorted[i][0][1]
+        #print 'Score', activities_sorted[i][1],  'Dist', activities_sorted[i][0][1]
         activities.append(activities_sorted[i][0][0])
     
     

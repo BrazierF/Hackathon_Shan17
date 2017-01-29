@@ -117,9 +117,11 @@
     
     <FORM method="post" action="" id="ourForm">
     <div class="form-group">
+    <label class="col-form-label"> Vos envies</label>
       <input type="hidden" id='request' name="request" placeholder="Que souhaitez-vous faire?"/>
-		<ul id="user_inputs">
-						<li class="form-group row"><textarea class="user_inputs form-control" data-position="0"
+		<ul id="user_inputs" class="form-group" style="list-style-type: none;padding-left:0px">
+		      
+						<li class="form-group row" ><textarea class="user_inputs form-control" data-position="0"
 								id="user_inputs_0" rows="1" cols="50"></textarea></li>
 		</ul>
 
