@@ -1,0 +1,48 @@
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+text_to_features/.ipynb_checkpoints/*
+*.csv
+*.xlsx
+text_to_features/Restaurants
+*.ipynb
+text_to_features/frWac_non_lem_no_postag_no_phrase_200_cbow_cut100.bin
+text_to_features/tweets/*
+text_to_features/streaming_twitter.py
+text_to_features/scores/*
+text_to_features/queries/*

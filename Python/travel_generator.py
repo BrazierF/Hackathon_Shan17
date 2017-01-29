@@ -6,6 +6,7 @@
 import numpy as np
 import json
 import time as time
+import matplotlib.pyplot as plt
 
 _columns = {
             'id':0,
@@ -31,21 +32,20 @@ _type = {
 
 class Activity: #activity
     #constructor    
-    def __init__(self, name='',lat=0.0, lng=0.0,x=0.0, y=0.0,s=0.0,t=0.0):
+    def __init__(self, name='',type_='',lat=0.0, lng=0.0,s=0.0,t=0.0):
         
         #name
         self.name = name
-        #position
-        self.x_coord = x #x coordinate
-        self.y_coord = y #y coordinate
         
         #GPS coordinates
-        self.lat = lat #latitude
-        self.lng = lng #longitude
+        self.lat = float(lat) #latitude
+        self.lng = float(lng) #longitude
         
         #score
         self.score = s
         self.duration = t
+        
+        self.type=type_
         
     def set_base_columns(self,row):
          #name
@@ -127,20 +127,23 @@ def journey_optimizer_master(activity_set, tMax, nBest):
 def journey_optimizer_stochastic(activity_set, tMax, nBest):
     
     nType=4
-    discount = [0.5, 0.2, 0.2, 0.7] #discount factors, used to limit the number of events of the same type
     #seperate activities by type (so we don't have three restaurants in a proposition)
-    activitiesByType=[[]]*nType
-    scoreByType=[[]]*nType
-    softmaxByType=[[]]*nType
-
+    activitiesByType=[[]for i in range(nType)]
+    scoreByType=[[]for i in range(nType)]
+    softmaxByType=[[]for i in range(nType)]
+    
+    
     nbPerType=[0]*nType
+
     for a in activity_set:
+#        print _type[a.type]
         activitiesByType[_type[a.type]].append(a)
         scoreByType[_type[a.type]].append(a.score / 100.0) #dividing scores by 100 makes the softmax more stable
         nbPerType[_type[a.type]] = nbPerType[_type[a.type]]+1
     
     #sort each activity set by decreasing score value
     for k in range(nType):
+#        print '\tnbPerType', nbPerType[k], '; length of acti per Type', len(activitiesByType[k])
         activitiesByType[k] = sorted(activitiesByType[k], key=lambda x: -x.score)
         scoreByType[k] = sorted(scoreByType[k], key=lambda x: -x)
     
@@ -152,36 +155,41 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     activities=[]
 
     start=time.time()
-    while(time.time()-start<0.5):
+    nbAppend=0
+    iter=0
+    while(time.time()-start<0.1):
         acti=[]
         
         #generate one activity per type, using the softmax values as the probability of choosing each element among a class
+        sTot=0.0
+        tTot=0.0
         for k in range(nType):
-            r=np.random.rand()
+            r=np.random.rand()  #cast a random number
+            #and decide which element of the set is added
             for i in range(nbPerType[k]):
                 if(r<softmaxByType[k][i]):
                     acti.append(activitiesByType[k][i])
+                    tTot=tTot+activitiesByType[k][i].duration
+                    sTot=sTot+activitiesByType[k][i].score
+#                    print 'iter',iter,'; type',k,'; act',i
                     break
                 else:
                     r=r-softmaxByType[k][i]
-        
-        #now, compute the total duration and total score of this journey
-        sTot=0.0
-        tTot=0.0
-        for a in acti:
-            tTot=tTot+a.duration
-            sTot=sTot+a.score
-            if tTot>tMax:
-                #proposed journey is too long: discard it
-                break
-        
+
         if tTot>tMax:
-            continue #proposed journey is too long: discard it
+            #journey is too long : discard
+            break
         else:
-            activities.append((acti,sTot)) #keep journey    
+            #journey respects the time constraint
+            activities.append((acti,sTot))
+            nbAppend=nbAppend+1    
+        iter=iter+1
     
+#    print iter
     #sort journeys by decreasing total score
     nbJourneys=len(activities)
+#    print '\t\t', nbJourneys
+#    print 'nbAppend=', nbAppend
     if nbJourneys==0:
         return []
     
@@ -239,3 +247,53 @@ def compute_tsp_tour(activities):
         sorted_activities[i]=activities[int( tour_idx[i])]
         
     return sorted_activities
+
+np.random.seed(0)
+
+acti_list=[]
+start=time.time()
+typeList=['Parcs',
+          'resto',
+          'Evenements WE',
+          'Patrimoine cult hist']
+for i in range(100):
+    s=100*np.random.rand()
+    w=2*np.random.rand()+0.25
+    t=np.random.randint(0,4)
+    a = Activity('',typeList[t],np.random.rand(),np.random.rand(),s,w)
+    acti_list.append(a)
+
+
+#acti_journey = journey_optimizer_master(acti_list, 6, 1)
+#end=time.time()
+#
+#print end-start
+#
+#journey=acti_journey
+#x=np.zeros(len(journey))
+#y=np.zeros(len(journey))
+#
+#for i in range(len(journey)):
+#    x[i]=journey[i].lat
+#    y[i]=journey[i].lng
+#    
+#plt.plot(x,y,'o-')
+#plt.show()
+
+#start=time.time()
+#acti_journey=journey_optimizer_stochastic(acti_list, 24, 10)
+#end=time.time()
+#print end-start
+#
+#for journey in acti_journey:
+#    x=np.zeros(len(journey))
+#    y=np.zeros(len(journey))
+#
+#    for i in range(len(journey)):
+#        x[i]=journey[i].lat
+#        y[i]=journey[i].lng
+#    print len(journey)
+#    print journey
+#    
+#    plt.plot(x,y,'o-')
+#    plt.show()
