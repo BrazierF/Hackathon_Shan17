@@ -11,7 +11,7 @@ import time as time
 
 class Activity: #activity
     #constructor    
-    def __init__(self, name='',x=0.0, y=0.0,s=0.0,t=0.0):
+    def __init__(self, name='',lat=0.0, lng=0.0,x=0.0, y=0.0,s=0.0,t=0.0):
         
         #name
         self.name = name
@@ -19,12 +19,17 @@ class Activity: #activity
         self.x_coord = x #x coordinate
         self.y_coord = y #y coordinate
         
+        #GPS coordinates
+        self.lat = lat #latitude
+        self.lng = lng #longitude
+        
         #score
         self.score = s
         self.duration = t
         
     def distance(self,b):
-        return np.sqrt( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord))
+        return np.sqrt( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord)) #euclidean distance
+        return 1.852 * 60 * np.arccos(np.sin(self.lat)*np.sin(b.lat)+np.cos(self.lat)*np.cos(b.lat)*cos(self.lng-b.lng)) #bird-fly distance, in km, using GPS coordinates
         #return ( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord))
 
 
