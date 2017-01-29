@@ -96,7 +96,7 @@ def journey_optimizer_master(activity_set, tMax, nBest):
     # => this is a knapsack problem
     
     #1. sort activities by decreasing ratios score / time_needed 
-    activities = sorted(activity_set, key=lambda x: x.score / (x.duration+0.00001)) #protect from duration being 0.00
+    activities = sorted(activity_set, key=lambda x: -x.score / (x.duration+0.00001)) #protect from duration being 0.00
     
     #3. Approximately solve the knapsack problem
     #greedily add activities as long as the total duration is less than the max allowed

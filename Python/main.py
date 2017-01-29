@@ -25,6 +25,7 @@ if __name__ == "__main__":
     from travel_generator import *
     import json,sys
     if len(sys.argv) > 1 : 
-        main(sys.argv[1],sys.argv[2],sys.argv[3])
+        print sys.argv
+        main(sys.argv[1],60*int(sys.argv[2]),int(sys.argv[3]))
     else:
         main('',6*60,1)
