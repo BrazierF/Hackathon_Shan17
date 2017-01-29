@@ -11,22 +11,27 @@ texts = ['boire une biere','aller au parc','manger asiatique']
 
 def main(text,tMax,nBest):
 #    print text
+    if len(text.split('|')[0].strip()) == 0:
+	text = "parc|evenement|restaurant|culture"
+ #   print text
     activity_set = recuperer()
 #    print len(activity_set)
     with open("/var/www/html/Hackathon/text_to_features/queries/q.txt", "w") as f:
 #       	print text.split('|')
+	count = 0.
 	for st in text.split("|"):
 	    if len(st.strip()) > 0:
+		count += 1
    	        f.writelines(st.strip()+ "\n")
     	scores=[0 for t in range(len(activity_set))]
-    for i in range(len(texts)):
+    for i in range(int(count)):
         with open("/var/www/html/Hackathon/text_to_features/scores/out_"+str(i)+".txt", "r") as f:
-            lines = f.readlines()
+             lines = f.readlines()
         for k,l in enumerate(lines) :
 #	     print l
-             scores[k]+= float(l.split(' : ')[1])
+             scores[int(l.split(' : ')[0])-1]+= float(l.split(' : ')[1]) / count
     for i in range (len(activity_set)):
-        activity_set[i].score += scores[k]
+        activity_set[i].score *= scores[k]* scores[k]
     time.sleep(1)
     resultat = journey_optimizer_stochastic(activity_set, tMax, nBest) 
     

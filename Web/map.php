@@ -5,13 +5,9 @@
   <script src="/Hackathon/Web/ext/jquery-1.12.1.min.js"></script>
 <script src="/Hackathon/Web/ext/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="/Hackathon/Web/ext/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
-<link rel="stylesheet" href="/Hackathon/Web/ext/material-icons/material-icons.css">
-<link rel="stylesheet" href="/Hackathon/Web/ext/jquery-ui-1.11.4/jquery-ui.css">
-<link rel="stylesheet" href="/Hackathon/Web/ext/jquery-ui-1.11.4/jquery-ui.theme.css">
-<link rel="stylesheet" href="/Hackathon/Web/ext/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="/Hackathon/Web/ext/bootstrap-3.3.6-dist/css/simple-sidebar.css">	
-<link rel="stylesheet" href="/Hackathon/Web/ext/bootstrap-3.3.6-dist/css/full-slider.css">			
-<link rel="stylesheet" href="/Hackathon/Web/map.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">			
+<link rel="stylesheet" href=" http://192.168.199.109/Hackathon/Web/map.css">
     <title>Place searches</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -30,9 +26,11 @@
 	var infowindow;
 	var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	var labelIndex = 0;
+	var parcours_index = 0;
+	var all_pts;
 
 	function loadPoints() {
-		  pts = 
+		all_pts = 
 			    <?php
 			    $output =array();
 			    if(isset($_POST['request']) && isset($_POST['nb']) && isset($_POST['max_duration'])){			    	
@@ -42,7 +40,7 @@
 			    }
 			    	//var_dump($output);
 			    echo implode(' ',$output);?>;
-          return pts[0];
+          return all_pts[parcours_index];
         }
 
 
@@ -114,16 +112,11 @@
 </nav>
 </div>
     <div id="map"></div>
-    <script type="text/javascript">
-    var toto = 
-    <?php $output =array();
-    	exec('/usr/bin/python2.7 /var/www/html/Hackathon/Python/main.py',$output);
-    	//var_dump($output);
-    	echo implode(' ',$output);?>;
-    	console.log(toto);
-    </script>
+    <div class="container">
+    <div class="col-md-6">
+    
     <FORM method="post" action="" id="ourForm">
-    	
+    <div class="form-group">
       <input type="hidden" id='request' name="request" placeholder="Que souhaitez-vous faire?"/>
 		<ul id="user_inputs">
 						<li><textarea class="user_inputs" data-position="0"
@@ -216,8 +209,12 @@
       <label>Durée du parcours</label>
       <input name="max_duration" type="number" value=<?php echo (isset($_POST['max_duration']) ? $_POST['max_duration'] : 4 ) ?> min=0 max=10/>
       <button type="button" onclick="sub()" class="btn btn-default">OK</button>
+    </div>
     </FORM>
-
+	</div>
+	<div class="col-md-6">
+	</div>
+	</div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk&signed_in=true&libraries=places&callback=initMap" async defer></script>
   </body>
  
