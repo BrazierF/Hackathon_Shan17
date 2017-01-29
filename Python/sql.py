@@ -32,14 +32,15 @@ def recuperer():
                                   host='127.0.0.1',
                                   database='hackathon2017')
     cursor = cnx.cursor()
-    query = ("(SELECT * FROM lieux "
-             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
-             "(SELECT * FROM lieux "
-             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
-             "(SELECT * FROM lieux "
-             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
-             "(SELECT * FROM lieux "
-             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
+#    query = ("(SELECT * FROM lieux "
+#             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
+#             "(SELECT * FROM lieux "
+#             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
+#             "(SELECT * FROM lieux "
+#             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
+#             "(SELECT * FROM lieux "
+#             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
+    query = ("SELECT * FROM lieux ORDER BY id ASC")
     
    # hire_start = datetime.date(1999, 1, 1)
     #hire_end = datetime.date(1999, 12, 31)
