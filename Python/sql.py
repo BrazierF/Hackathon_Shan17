@@ -6,6 +6,7 @@ Created on Sat Jan 28 14:10:59 2017
 """
 import mysql.connector, datetime,os,googlemaps
 from travel_generator import *
+import pickle
 from datetime import datetime
 
 #gmaps = googlemaps.Client(key='AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk')
@@ -54,7 +55,7 @@ def recuperer():
         act = Activity(row[2],row[4],row[5])
         act.set_base_columns(row)
         res.append(act)
-        act.afficher()
+        #act.afficher()
         row = cursor.fetchone()
     #for item in cursor:
      #     print item
@@ -68,7 +69,7 @@ def parser(filename,cursor):
 
 
 def ajouter_item(cursor,item):
-    print item
+    #print item
     if 'lat_v' not in item.keys() or  'lon_v' not in item.keys():
         add_item = ("INSERT INTO lieux "
                   "(type,nom,adresse,lat,lon,description,vecteur,extra) "
@@ -84,7 +85,8 @@ def ajouter_item(cursor,item):
     
 def const_item(type_lieu,tableau):
     for x in tableau :
-        print x
+        pass
+        #print x
         
     if type_lieu == 'Parcs':
         item = {
@@ -153,7 +155,7 @@ def trouver_adresse_gps(item):
         item['lat_v']=lat
         item['lon_v']=lon
         item['adresse_v']=''
-    print item
+    #print item
     if len(item['adresse_v']) == 0:
         if 'lat_v' and 'lon_v' in item.keys():
             result = gmaps.reverse_geocode((item['lat_v'], item['lon_v']))
@@ -195,7 +197,76 @@ def ajouter(filename):
         cnx.commit()
         cursor.close()
         cnx.close()
+        
+def recuperer():
+    cnx = mysql.connector.connect(user='Hackathon', password='Python2.7',
+                                  host='127.0.0.1',
+                                  database='hackathon2017')
+    cursor = cnx.cursor()
+    query = ("(SELECT * FROM lieux "
+             "WHERE type='Patrimoine cult hist' AND lat IS NOT NULL LIMIT 2) UNION  "
+             "(SELECT * FROM lieux "
+             "WHERE type='Evenements WE' AND lat IS NOT NULL LIMIT 2) UNION   "
+             "(SELECT * FROM lieux "
+             "WHERE type='resto' AND lat IS NOT NULL LIMIT 2) UNION   "
+             "(SELECT * FROM lieux "
+             "WHERE type='Parcs' AND lat IS NOT NULL LIMIT 2) ")
+    
+   # hire_start = datetime.date(1999, 1, 1)
+    #hire_end = datetime.date(1999, 12, 31)
+    
+    cursor.execute(query)
+    res=[]
+    #row = dict(zip(cursor.column_names, cursor.fetchone()))
+    row = cursor.fetchone()
+    
+    while row is not None:
+        #print(row)
+        #row = dict(zip(cursor.column_names, cursor.fetchone()))
+        act = Activity(row[2],row[4],row[5])
+        act.set_base_columns(row)
+        res.append(act)
+        #act.afficher()
+        row = cursor.fetchone()
+    #for item in cursor:
+     #     print item
+    #print cursor.fetchall()    
+    cursor.close()
+    cnx.close()
+    return res
 
+def recupererlo():
+    cnx = mysql.connector.connect(user='Hackathon', password='Python2.7',
+                                  host='127.0.0.1',
+                                  database='hackathon2017')
+    cursor = cnx.cursor()
+    query = ("SELECT id,type,nom,tags FROM lieux ")
+    
+   # hire_start = datetime.date(1999, 1, 1)
+    #hire_end = datetime.date(1999, 12, 31)
+    
+    cursor.execute(query)
+    res=[]
+    #row = dict(zip(cursor.column_names, cursor.fetchone()))
+    row = cursor.fetchone()
+    
+    while row is not None:
+        #print(row)
+        #row = dict(zip(cursor.column_names, cursor.fetchone()))
+#        act = Activity(row[2],row[4],row[5])
+#        act.set_base_columns(row)
+        res.append(row)
+#        act.afficher()
+        row = cursor.fetchone()
+    with open('toto.pkl','w') as f:
+        pickle.dump(res,f)
+    #for item in cursor:
+     #     print item
+    #print cursor.fetchall()    
+    cursor.close()
+    cnx.close()
+    return res
+#recupererlo()
 #ajouter('Patrimoine cult hist.csv')
 #ajouter('Evenements WE.csv')
 #ajouter('resto.csv')

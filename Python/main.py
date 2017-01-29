@@ -12,10 +12,10 @@ def main(text,tMax,nBest):
     activity_set = recuperer()
     resultat = journey_optimizer_master(activity_set, tMax, nBest) 
     printable  = '['
-    print resultat
+    #print resultat
     if len(resultat)>0:
         for x in resultat:
-            print x.toJSON()
+            #print x.toJSON()
             printable += x.toJSON()+','
         printable = printable[:-1]
         print printable+']'
