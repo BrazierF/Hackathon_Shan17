@@ -1,4 +1,5 @@
-<?php $url = $_SERVER['SERVER_NAME'];?>
+<?php $url = $_SERVER['SERVER_NAME'];
+$output=array();?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -27,48 +28,40 @@
 	var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	var labelIndex = 0;
 	var parcours_index = 0;
-	var all_pts;
-
-	function loadPoints() {
-		all_pts = 
+	var bounds ;
+	var all_pts = 
 			    <?php
-			    $output =array();
 			    if(isset($_POST['request']) && isset($_POST['nb']) && isset($_POST['max_duration'])){			    	
 			    	exec ('/usr/bin/python2.7 /var/www/html/Hackathon/Python/main.py "'. $_POST['request'].' " '. $_POST['max_duration'].' '.$_POST['nb'],$output);
 			    }else{
 			    	exec('/usr/bin/python2.7 /var/www/html/Hackathon/Python/main.py',$output);			    	
 			    }
-			    	//var_dump($output);
-			    echo implode(' ',$output);?>;
-          return all_pts[parcours_index];
-        }
-
+			    	$output= implode(' ',$output);;
+			    echo $output ;
+			    $output = json_decode($output);?>;
+	var all_markers ;
 
 	function initMap() {
-          var bounds = new google.maps.LatLngBounds ();
-
-          pts = loadPoints();
-
 	  map = new google.maps.Map(document.getElementById('map'), {
 	    center: {lat: 46.5619, lng: -72.7435}, //center on shawinigan
 	    zoom: 12
 	  });
-
 	  infowindow = new google.maps.InfoWindow();
-	  var service = new google.maps.places.PlacesService(map);
-	  for(var i = 0; i < pts.length; i++) {
-            latlng = new google.maps.LatLng (pts[i].lat,pts[i].lng);
-            bounds.extend (latlng);
-	   /* service.nearbySearch({
-	      location: {lat: pts[i].lat, lng: pts[i].lng},
-	      radius: '30',
-	      //name: pts[i].name
-	      keyword : pts[i].adresse
-	    }, callback);*/
-    	    createMarker(pts[i]);
+	  console.log(all_pts);
+	  all_markers = new Array(all_pts.length);
+	  for(var j = 0 ; j < all_pts.length; j++){
+		  all_markers[j] = new Array(all_pts[j].length);
+		  for(var i = 0; i < all_pts[j].length; i++) {
+	            all_markers[j][i]=createMarker(all_pts[j][i]);
+		  }
 	  }
-          map.fitBounds (bounds);
+	  console.log(all_markers);
+	  afficherProp(0);
+      
 	}
+
+	 // var service = new google.maps.places.PlacesService(map);
+	
 
 	function callback(results, status) {
 	  if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -90,6 +83,7 @@
 	    infowindow.setContent(place.name);
 	    infowindow.open(map, this);
 	  });
+	  return marker;
 	}
 
     </script>
@@ -106,11 +100,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a id="display_menu" class="navbar-brand clickable" href="/Hackathon/Web/home.php" >L'indispensable</a>
-      </div>
-      </div>
+      <a id="display_menu" class="navbar-brand clickable" href="/Hackathon/Web/home.php" ><h3 class='title' >L'indispensable</h3></a>
+      </div> 
+      </div> 
 </nav>
 </div>
+<div id="wrapper">
     <div id="map"></div>
     <div class="container">
     <div class="col-md-6">
@@ -210,14 +205,43 @@
       <input name="nb" type="number" class="form-control"  value = <?php echo (isset($_POST['nb']) ? $_POST['nb'] : 3 ) ?> min=0 max=10/>
       <label class="col-form-label" >Durée du parcours</label>
       <input name="max_duration" class="form-control" type="number" value=<?php echo (isset($_POST['max_duration']) ? $_POST['max_duration'] : 4 ) ?> min=0 max=10/>
-      <button type="button" onclick="sub()" class="btn btn-default">OK</button>
+      <button type="button" onclick="sub()" class="btn btn-default">C'est parti !</button>
     </div>
     </FORM>
 	</div>
+	<script type="text/javascript">
+	function afficherProp(i){
+		bounds = new google.maps.LatLngBounds();
+		for (var j = 0; j < all_pts.length; j++){
+			for (var k = 0; k < all_pts[j].length; k++){
+				all_markers[j][k].setVisible(false);
+			}
+		}
+		for (var k = 0; k < all_pts[i].length; k++){
+			all_markers[i][k].setVisible(true);
+			latlng = new google.maps.LatLng (all_pts[i][k].lat,all_pts[i][k].lng);
+	        bounds.extend(latlng);   	   
+		}
+		map.fitBounds(bounds);
+	}
+	</script>
 	<div class="col-md-6">
+	<?php
+	//var_dump($output);
+	for($i = 0 ; $i<count($output);$i++){?>
+		<div class= "panel panel-default" onclick="afficherProp(<?php echo $i?>)">
+		<div class= "panel-heading" style="font-weight: 700;">
+			Circuit #<?php echo $i+1?>
+		</div>
+		<div class="panel-body">
+			Toto
+		</div>
+		</div>
+	<?php }?>
 	</div>
 	</div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk&signed_in=true&libraries=places&callback=initMap" async defer></script>
-  </body>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk&signed_in=true&libraries=places&callback=initMap" async defer></script>
+</div>
+</body>
  
 </html>

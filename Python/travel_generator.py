@@ -200,7 +200,7 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     activities=sorted(activities, key=lambda x: -x[1])
     
     #only keep the nBest journeys, if they exist
-    activities=[activities[i] for i in range(np.min([nbJourneys, 2*nBest]))]
+    activities=[activities[i] for i in range(np.min([nbJourneys, nBest]))]
     
     #finally, sort the remaining journeys, by computing their TSP tour approximations
     activities_sorted=[]

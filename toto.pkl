@@ -1,0 +1,442 @@
+(lp0
+(I1
+VPatrimoine cult hist
+p1
+VLieu historique national du Canada de l'Ancienne-Aluminerie-de-Shawinigan
+p2
+Vhistoire industrie culture aluminerie locale ancien nature riviere
+p3
+I25
+tp4
+a(I2
+VPatrimoine cult hist
+p5
+VGare ferroviaire patrimoniale du Canada
+p6
+NI10
+tp7
+a(I3
+VPatrimoine cult hist
+p8
+VPoste d'incendie et de police Numéro-Deux-de-Shawinigan
+p9
+Vbatiment culture patrimoine incendie pompier architecture
+p10
+I10
+tp11
+a(I4
+VPatrimoine cult hist
+p12
+VAuberge Grand-Mère
+p13
+Vmonument ancien architecture histoire auberge batiment
+p14
+I10
+tp15
+a(I5
+VPatrimoine cult hist
+p16
+VCité de l'Energie Musee
+p17
+Vvisite histoire culture science musee energie typique immanquable
+p18
+I48
+tp19
+a(I6
+VPatrimoine cult hist
+p20
+VCentre d'exposition Léo-Ayotte de la Corporation culturelle de Shawinigan
+p21
+Vexposition art science patrimoine culture artiste technologie education informations connaissances 
+p22
+I45
+tp23
+a(I7
+VPatrimoine cult hist
+p24
+VPont de Grand-Mère
+p25
+Vpont histoire culture science industrie architecture
+p26
+I20
+tp27
+a(I8
+VPatrimoine cult hist
+p28
+VÉglise Notre-Dame-de-la-Présentation - Decor peint
+p29
+Veglise art peinture culture religion exposition
+p30
+I40
+tp31
+a(I9
+VPatrimoine cult hist
+p32
+VCentrale Shawinigan-2
+p33
+NI15
+tp34
+a(I10
+VPatrimoine cult hist
+p35
+VCentrale de Grand-Mère
+p36
+Vcentrale science energie histoire patrimoine nature industrie economie culture
+p37
+I15
+tp38
+a(I11
+VPatrimoine cult hist
+p39
+VDomaine Beauséjour
+p40
+Vcoeur de la nature \u000aacces lac villegiature chasse \u000apeche architecture XIX siecle 
+p41
+I35
+tp42
+a(I12
+VPatrimoine cult hist
+p43
+V"Hôtel de ville "
+p44
+Varchitecture service aux citoyens
+p45
+I20
+tp46
+a(I13
+VPatrimoine cult hist
+p47
+V"Presbytère Notre-Dame-de-la-Présentation"
+p48
+Veglise catholique style romain peintures murales 
+p49
+I30
+tp50
+a(I14
+VPatrimoine cult hist
+p51
+VÉglise anglicane St. Stephen
+p52
+Veglise christianisme 
+p53
+I30
+tp54
+a(I15
+VPatrimoine cult hist
+p55
+VÉglise Saint-Bernard
+p56
+Veglise \u000apresbytere\u000aarchitecture gothique\u000aorgue\u000a
+p57
+I41
+tp58
+a(I16
+VPatrimoine cult hist
+p59
+V"Ancienne banque de Montréal"
+p60
+NI0
+tp61
+a(I17
+VPatrimoine cult hist
+p62
+V"Ancien monastère des servantes de Jésus-Marie"
+p63
+NI0
+tp64
+a(I18
+VEvenements WE
+p65
+VTournoi de hockey novice-bantam de Saint-Georges
+p66
+Vsport\u000ahockey\u000ajunior\u000anovice\u000aSaint-Georges\u000apatins\u000aglace\u000amatch
+p67
+I25
+tp68
+a(I19
+VEvenements WE
+p69
+VTournoi de hockey midget/junior Optimiste
+p70
+Vsport\u000ahockey\u000apatins\u000aglace\u000ajunior\u000amatch
+p71
+I25
+tp72
+a(I20
+VEvenements WE
+p73
+VBaie-Comeau vs Cats
+p74
+Vequipe provincial\u000ahockey\u000ahiver\u000apatins\u000aglace\u000asport\u000aadulte\u000ajoueur\u000amatch
+p75
+I45
+tp76
+a(I21
+VEvenements WE
+p77
+VClassique hivernale Broadway
+p78
+VCourse caritative activite pour enfants sport match epreuve billets
+p79
+I50
+tp80
+a(I22
+VEvenements WE
+p81
+VRimouski vs Cats
+p82
+VSport match hockey billets spectacle spectateur
+p83
+I45
+tp84
+a(I23
+VEvenements WE
+p85
+VTournoi de hockey novice de Shawinigan-Sud
+p86
+VTournoi hockey participants spectacle inscription participation
+p87
+I30
+tp88
+a(I24
+VEvenements WE
+p89
+VRimouski vs Cats
+p90
+VSport match hockey billets spectacle spectateur
+p91
+I45
+tp92
+a(I25
+VEvenements WE
+p93
+V
+p94
+NI0
+tp95
+a(I26
+Vresto
+p96
+VMicrobrasserie Le Trou du diable
+p97
+VMicrobrasserie, bistrot, pub branche terrasse mets raffinés bieres bar maison brasserie degustation apéritifs alcool burger
+p98
+I47
+tp99
+a(I27
+Vresto
+p100
+VLe Radoteux
+p101
+Vbar, steak, fruits de mer, hamburger Restaurant moderne bar terrasse hamburgers steaks fruits de mer
+p102
+I43
+tp103
+a(I28
+Vresto
+p104
+VLe Saint-Mo Bistro Gourmand
+p105
+VBistro, microbrasserie, cocktails. bistro terrasses vues riviere mets reconfortants cocktails
+p106
+I40
+tp107
+a(I29
+Vresto
+p108
+VLe Globe Steakhouse
+p109
+VGrillades, steakhouse, hamburger, pizzas, authentique decouvrir steaks, cotes levees, grillades fruits de mer. Grilladerie offrant des coupes de b\u0153uf et des vins divers et d'autres mets comme des hamburgers et des pizzas.
+p110
+I38
+tp111
+a(I30
+Vresto
+p112
+VRestaurant Cité D'Angkor
+p113
+Vrestaurant cambodgien et thaïlandais asiatique epice
+p114
+I48
+tp115
+a(I31
+Vresto
+p116
+VRestaurant La Pointe à Bernard
+p117
+VSuper bouffe authentique francaise bon choix de vin
+p118
+I50
+tp119
+a(I32
+Vresto
+p120
+VRôtisserie St-Hubert
+p121
+VFast food poulet rapide frites chaine de restaurants efficace livraison
+p122
+I43
+tp123
+a(I33
+Vresto
+p124
+VRestaurant Dragon Thai
+p125
+Vrestaurant thai thailandais asiatique\u000achinois\u000afriture\u000apad thai\u000asoupe
+p126
+I48
+tp127
+a(I34
+Vresto
+p128
+VRestaurant agostinos
+p129
+Vrepas\u000asouper\u000adiner\u000alunch\u000adejeuner\u000abrunch\u000afruits\u000a
+p130
+I46
+tp131
+a(I35
+Vresto
+p132
+VStratos Pizzeria
+p133
+Vrestaurant, bouffe, manger, pizza, italien, cuisine familial\u000apoutine
+p134
+I34
+tp135
+a(I36
+Vresto
+p136
+VRestaurant St-Marc Déli
+p137
+Vrestaurant\u000abouffe\u000amanger\u000acuisine \u000adejeuner\u000asouper\u000adiner\u000alunch\u000arepas\u000afamilial\u000adeli\u000asandwich\u000acanadien\u000aitalien\u000agrec\u000abrunch\u000aalcool\u000apoulet\u000abrochette\u000aveau\u000afruit de mer\u000ahamburger\u000apizza\u000apita
+p138
+I42
+tp139
+a(I37
+Vresto
+p140
+VRestaurant Chez Carmen
+p141
+Vrestaurant\u000abar\u000acuisine maison\u000atraiteur\u000arepas\u000alunch\u000asouper\u000adiner\u000amanger\u000abouffe\u000abuffet\u000adejeuner
+p142
+I35
+tp143
+a(I38
+Vresto
+p144
+VCasa Grecque
+p145
+Vrestaurant, bouffe, manger, cuisine, grec, mediterranee
+p146
+I45
+tp147
+a(I39
+Vresto
+p148
+VPizzeria 67
+p149
+Vrestaurant, bouffe, manger, pizza, italien, cuisine
+p150
+I35
+tp151
+a(I40
+Vresto
+p152
+VAki Sushi Aki Thaï Shawinigan
+p153
+Vrestaurant, bouffe, nourriture, asiatique, sushi, thai
+p154
+I35
+tp155
+a(I41
+Vresto
+p156
+VPacini
+p157
+Vrestaurant, bouffe, cuisine, italien
+p158
+I36
+tp159
+a(I42
+Vresto
+p160
+VRestaurant Bravo L'Original
+p161
+Vrestaurant, italien, cuisine, bouffe, nourriture, manger
+p162
+I46
+tp163
+a(I43
+Vresto
+p164
+VBianky Restaurant
+p165
+Vrestaurant, bouffe, diner, bar, manger, cuisine
+p166
+I36
+tp167
+a(I44
+Vresto
+p168
+VRestaurant Olympic Pizzeria
+p169
+Vrestaurant, bouffe, nourriture, manger, pizza
+p170
+I45
+tp171
+a(I45
+Vresto
+p172
+VFusée Shawinigan
+p173
+Vrestaurant, poulet, rotisserie, manger, cuisine, nourriture, bouffe
+p174
+I32
+tp175
+a(I46
+VParcs
+p176
+VParc de l'ile Melville
+p177
+Vparc, espace, nature, arbre, camping, activite, ile, marina, bateau, sentier, randonnee, balade
+p178
+I43
+tp179
+a(I47
+VParcs
+p180
+VParc Antoine St-Onge
+p181
+Vparc, piscine, air, espace, nature, arbre
+p182
+I43
+tp183
+a(I48
+VParcs
+p184
+VParc du Saint-Maurice
+p185
+Vparc, riviere, nature, espace, sculpture
+p186
+I45
+tp187
+a(I49
+VParcs
+p188
+VParc Trois-L
+p189
+Vparc, espace vert, nature, patinoire, ombre, respirer, herbe, etendue, arbres, nature, baseball, sport
+p190
+I40
+tp191
+a(I50
+VParcs
+p192
+VParc Bellevue
+p193
+V"parc, espace, nature, verdure, herbe, sport, bouger, courir, respirer, baseball, environnement, patinoire
+p194
+I40
+tp195
+a.

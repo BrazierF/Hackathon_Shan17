@@ -1,1 +1,51 @@
 @CHARSET "UTF-8";
+
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+
+    font-size: 40px;
+    line-height: 44px;
+    text-align: center;
+    margin: auto;
+    margin-top : 0px;
+
+    font-family: "Verdana", Geneva, sans-serif;
+
+}
+
+.navbar{
+      height:80px;
+      background-color: #1A6184!important;
+
+}
+
+
+.title{
+	margin-top : 0px;
+  font-size: 40px;
+  color:rgb(231, 231, 231) !important;
+  line-height: 44px;
+}
+
+#wrapper{
+	margin-top : 90px;
+	height:80%;
+}
+
+#cadre{
+	border-radius: 10px;
+  background-color: rgba(105, 56, 6,0.7);
+	height:100%;
+}
+#map{
+	height:100%;
+}
+
+body {
+    background-image: url("http://192.168.199.109/Hackathon/Web/backgroung_70.png");
+    background-size: cover;
+    background-color: rgba(204, 204, 204,0.4);
+}
