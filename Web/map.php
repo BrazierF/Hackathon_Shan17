@@ -122,22 +122,21 @@
     	echo implode(' ',$output);?>;
     	console.log(toto);
     </script>
-    <FORM method="post" action="">
-      <input type="text" name="request" placeholder="Que souhaitez-vous faire?"/>
+    <FORM method="post" action="" id="ourForm">
+    	
+      <input type="hidden" id='request' name="request" placeholder="Que souhaitez-vous faire?"/>
 		<ul id="user_inputs">
 						<li><textarea class="user_inputs" data-position="0"
 								id="user_inputs_0" rows="1" cols="50"></textarea></li>
 		</ul>
-		</form>
-	</div>
-</div>
+
 <script type="text/javascript">
 		<!--
 		
 		//-->
 		
 		$(function (){
-			mmh('#user_inputs');
+			mmh('#user_inputs_0');
 			});
 		
 		function mmh(element){
@@ -146,20 +145,20 @@
 			//console.log(e.keyCode);
 			// Entree
 			  if ( (e.keyCode == 13 || e.keyCode == 10) && !e.shiftKey) {
-				  var tableau = document.getElementsByClassName('comments_areas');
+				  var tableau = document.getElementsByClassName('user_inputs');
 				  var indice = tableau.length;
 				  //console.log(indice);
 				  var nvtext = e.currentTarget.value.substring(e.currentTarget.selectionStart);
 				  e.currentTarget.value = e.currentTarget.value.substring(0,e.currentTarget.selectionStart);
-				  $(e.target.parentNode).after('<li><textarea class="comments_areas" data-position="'+indice+'" id="comments_areas_'+indice+'" rows="1" cols="50">'+nvtext+'</textarea></li>');
+				  $(e.target.parentNode).after('<li><textarea class="user_inputs" data-position="'+indice+'" id="user_inputs_'+indice+'" rows="1" cols="50">'+nvtext+'</textarea></li>');
 				    e.preventDefault();
 				    e.stopPropagation();
-				    mmh('#comments_areas_'+indice);
-					document.getElementById('comments_areas_'+indice).focus();
+				    mmh('#user_inputs_'+indice);
+					document.getElementById('user_inputs_'+indice).focus();
 			  }
 			  //Retour
 			  if (e.keyCode == 8) {
-				  if(document.getElementsByClassName('comments_areas').length > 1){
+				  if(document.getElementsByClassName('user_inputs').length > 1){
 					  if( 0 == e.currentTarget.selectionEnd){
 						  //console.log('#'+e.currentTarget.id);
 						  $(e.currentTarget).parent().prev().find("textarea").focus();
@@ -177,14 +176,14 @@
 			  }
 			  //Suppr
 			  if (e.keyCode == 46) {
-				  if(document.getElementsByClassName('comments_areas').length > 1){
+				  if(document.getElementsByClassName('user_inputs').length > 1){
 					  if(e.currentTarget.value.length == e.currentTarget.selectionStart){
 						  var ancien = e.currentTarget.value.length;
 						  e.currentTarget.value = e.currentTarget.value+ ($(e.currentTarget).parent().next().find("textarea").val());
 						  e.currentTarget.setSelectionRange(ancien,ancien);
 						  $(e.currentTarget).parent().next().remove();
 						  if(e.currentTarget.value == 'undefined' ){
-							  $(e.currentTarget).parent().prev().find("textarea").focus();
+							  $(e.currentTarget).parent().prev().find("user_inputs").focus();
 							  $(e.currentTarget).parent().remove();
 						  }
 						  e.preventDefault();
@@ -200,80 +199,23 @@
 			  }
 			});
 		}
-
-		$(function(){
-			note_toolpit();
-			});
 		
-		function note_toolpit(){
-			var span = document.getElementsByClassName('comments clickable');
-			for (compteur = 0; compteur < span.length ; compteur++){
-				var com = commentaires[span[compteur].dataset.episode_id];
-			 	//console.log(com);
-			 	com = com.split('|');
-			 	if(com[0].length >0){
-				 	//console.log(span[compteur].dataset.originalTitle);
-				 	span[compteur].dataset.placement="right"
-			 		span[compteur].dataset.originalTitle="<ul style='padding-left:7px;'>";
-				 	for( compt = 0 ; compt <com.length;com++){
-					 	//console.log(com);
-					 	span[compteur].dataset.originalTitle= span[compteur].dataset.originalTitle+'<li>'+com[compt]+'</li>';
-					}
-				 	span[compteur].dataset.originalTitle= span[compteur].dataset.originalTitle+'</ul>';
-			 	}else{
-			 		span[compteur].dataset.placement="top"
-			 		span[compteur].dataset.originalTitle="Notes";
-				 }
-			}
-			
-		}
-		
-		function envoyer_list(){
-			//var donnees = $('#list_comment').serializeArray();
-			var span = document.getElementById('myModalList'); 
-			var donnees =[];
-			var eu = span.getElementsByClassName('comments_areas');
+		function sub(){
+			var requete ='';
+			var eu = document.getElementById('user_inputs').getElementsByClassName('user_inputs');
 			for (indice = 0; indice< eu.length;indice++){
-				donnees.push(eu[indice].value);
+				requete += eu[indice].value +'|';
 			}
-			//console.log(span);
-			var donnees_b = {	
-					//type : span.getAttribute('type'),
-					series_id : span.getAttribute('data-series_id'),
-					series_name : span.getAttribute('data-series_name'),
-					episode_id :  span.getAttribute('data-episode_id'),
-					comments : donnees,			
-			};
-			//var concatarray = $.extend(donnees,donnees_b); 
-			//console.log(donnees_b);
-			$.post( "Ajout_commentaires.php", donnees_b ).done(function( data ) {
-				//console.log(data);
-				var recu = JSON.parse(data);
-				//console.log(recu);
-				//$('body').append(data);
-				var size = recu.size ;
-				//$('#comments_Result').empty();
-				if(!recu.succeed){
-					for(i = 0; i<recu.feedback.length;i++){
-						$('#list_comments').append('<li><div class="alert alert-danger" role="alert">'+recu.feedback[i]+'</div></li>');
-					}	
-					return ;
-				}else{
-					for(i = 0; i<recu.feedback.length;i++){
-						$('#list_comments').append('<li><div class="alert alert-success" role="alert">'+recu.feedback[i]+'</div></li>');
-					}
-					commentaires[span.getAttribute('data-series_id')] = recu.comments;
-					note_toolpit();
-					window.setTimeout("document.getElementById('myModalList').style.display = 'none';", 1500);
-				}
-				});
+			document.getElementById('request').value = requete;
+			console.log($('#ourForm'));
+			$('#ourForm').submit();
 		}
 		</script>
       <label>Nombre de propositions</label>
       <input name="nb" type="number" value = <?php echo (isset($_POST['nb']) ? $_POST['nb'] : 3 ) ?> min=0 max=10/>
       <label>Durée du parcours</label>
       <input name="max_duration" type="number" value=<?php echo (isset($_POST['max_duration']) ? $_POST['max_duration'] : 4 ) ?> min=0 max=10/>
-      <input type="submit"/>
+      <button type="button" onclick="sub()" class="btn btn-default">OK</button>
     </FORM>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk&signed_in=true&libraries=places&callback=initMap" async defer></script>
