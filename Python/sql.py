@@ -4,7 +4,8 @@ Created on Sat Jan 28 14:10:59 2017
 
 @author: franck
 """
-import mysql.connector, datetime,os,travel_generator,googlemaps
+import mysql.connector, datetime,os,googlemaps
+from travel_generator import *
 from datetime import datetime
 
 #gmaps = googlemaps.Client(key='AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk')

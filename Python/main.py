@@ -17,7 +17,11 @@ def main(text,tMax,nBest):
     printable = printable[:-1]
     print printable+']'
 
-if len(sys.argv) > 1 : 
-    main(sys.argv[1],sys.argv[2],sys.argv[3])
-else:
-     main('',6,1)
+if __name__ == "__main__":
+    from sql import *
+    from travel_generator import *
+    import json,sys
+    if len(sys.argv) > 1 : 
+        main(sys.argv[1],sys.argv[2],sys.argv[3])
+    else:
+        main('',6,1)
