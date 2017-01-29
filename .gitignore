@@ -44,3 +44,5 @@ text_to_features/Restaurants
 text_to_features/frWac_non_lem_no_postag_no_phrase_200_cbow_cut100.bin
 text_to_features/tweets/*
 text_to_features/streaming_twitter.py
+text_to_features/scores/*
+text_to_features/queries/*
