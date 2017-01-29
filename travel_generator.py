@@ -1,85 +1,103 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jan 28 13:01:24 2017
 
-@author: mathi
-"""
+# coding: utf-8
+
+# In[1]:
 
 import numpy as np
-import matplotlib as plt
+import time as time
+
+
+# In[2]
 
 class Activity: #activity
     #constructor    
-    def __init__(self, name='',x=0.0, y=0.0,s=0.0):
+    def __init__(self, name='',x=0.0, y=0.0,s=0.0,t=0.0):
         
         #name
         self.name = name
-        
         #position
         self.x_coord = x #x coordinate
         self.y_coord = y #y coordinate
         
         #score
         self.score = s
+        self.duration = t
         
     def distance(self,b):
         return np.sqrt( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord))
+        #return ( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord))
 
-def journey_optimizer(activity_sets, #list of tuples (activity set, n_type_min, n_type_max)
-                      dur_min=0.0,
-                      dur_max=np.inf, #max journey duration
-                      dist_min=0.0,
-                      dist_max=np.inf, #max travel distance
-                      t_solve_max=1.0, #maximum time allowed for solving
-                      ): 
 
-    n = activities.size() #number of activity types
-    n_tot = 1
-    for k in range(n):
-        n_tot = n_tot * len(activity_sets[k][0])
+# In[ ]:
 
+def journey_optimizer_master(activity_set, tMax, nBest):
     
+    #Activity_set is a list of activities
+    #assume scores are weighted to reflect user's preferences for each type of activity
     
+    #objective: find a subset of activities that maximise total score
+    #while respecting some time constraint
+    # => this is a knapsack problem
     
+    #1. sort activities by decreasing ratios score / time_needed 
+    activities = sorted(activity_set, key=lambda x: x.score / (x.duration+0.00001)) #protect from duration being 0.00
     
+    #3. Approximately solve the knapsack problem
+    #greedily add activities as long as the total duration is less than the max allowed
+    t_tot=0.0
+    nbActiSelected=0
+    while(t_tot<=tMax):
+        if (t_tot+activities[nbActiSelected].duration <= tMax):
+            #add item
+            nbActiSelected=nbActiSelected+1
+            t_tot=t_tot+activities[nbActiSelected].duration
+        else:
+            break
     
-    
-def tsp_distance(activities):
+    actiSelected = [activities[i] for i in range(nbActiSelected)]
+
+    return actiSelected
+
+
+# In[ ]:
+
+def compute_tsp_tour(activities):
     
     n=len(activities)
-    d=0.0
     
     #construct distance matrix
     dist=np.zeros((n,n))
-    close_neighbours=np.zeros((n,n))
     
     for i in range(n):
-        
         for j in range(i+1,n):
             #dist[i,j] = np.sqrt( np.square(activities[i].x_coord-activities[j].x_coord) + np.square(activities[i].y_coord-activities[j].y_coord))
-            dist[i,j] = activities[i].distance[activities[j]]
+            dist[i,j] = activities[i].distance(activities[j])
             dist[j,i] = dist[i,j]
-    for i in range(n):
-        close_distance = np.inf #initialize closeest neighbours as being at distance of + Infty
-        for j in range(n):
-            if(i !=j ):
-                if (dist[i,j] < close_distance):
-                    close_neighbours[i]=j
-                    close_distance = dist[i,j]
+
    
     #start with greedy insertion
-    tour=np.zeros(n)
-    visited = 
+    tour_flag=[False]*n
+    tour_idx=np.zeros(n)
+    current_node=0
     for i in range(n):
+        tour_idx[i]=current_node
+        tour_flag[current_node]=True
+        #find closest neighbour that is not in the tour
+        closest_neighbour = current_node
+        closest_distance = np.inf
+        for j in range(n):
+            if (tour_flag[j] or dist[current_node,j]>=closest_distance):
+                #j is already in the tour
+                continue
+            else:
+                closest_neighbour=j
+                closest_distance = dist[current_node, j]
         
+        current_node=closest_neighbour
     
-    #apply 2-opt post-optimization
-    
-    
-    return d
-    
-a=Activity('',0.0,0.0)
-b=Activity('',1.0,1.0)
-
-print tsp_distance([a,b])
-    
+    #compute tour
+    sorted_activities=[None]*n
+    for i in range(n):
+        sorted_activities[i]=activities[int( tour_idx[i])]
+        
+    return sorted_activities
