@@ -226,6 +226,7 @@ def compute_tsp_tour(activities):
     tour_flag=[False]*n
     tour_idx=np.zeros(n)
     current_node=0
+    total_dist=0.0
     for i in range(n):
         tour_idx[i]=current_node
         tour_flag[current_node]=True
@@ -239,9 +240,12 @@ def compute_tsp_tour(activities):
             else:
                 closest_neighbour=j
                 closest_distance = dist[current_node, j]
+
         
         current_node=closest_neighbour
+        total_dist=total_dist+closest_distance
     
+    print 'Total_Dist:', total_dist
     #compute tour
     sorted_activities=[None]*n
     for i in range(n):
@@ -251,18 +255,18 @@ def compute_tsp_tour(activities):
 
 np.random.seed(0)
 
-acti_list=[]
-start=time.time()
-typeList=['Parcs',
-          'resto',
-          'Evenements WE',
-          'Patrimoine cult hist']
-for i in range(100):
-    s=100*np.random.rand()
-    w=2*np.random.rand()+0.25
-    t=np.random.randint(0,4)
-    a = Activity('',typeList[t],np.random.rand(),np.random.rand(),s,w)
-    acti_list.append(a)
+#acti_list=[]
+#start=time.time()
+#typeList=['Parcs',
+#          'resto',
+#          'Evenements WE',
+#          'Patrimoine cult hist']
+#for i in range(100):
+#    s=100*np.random.rand()
+#    w=2*np.random.rand()+0.25
+#    t=np.random.randint(0,4)
+#    a = Activity('',typeList[t],np.random.rand(),np.random.rand(),s,w)
+#    acti_list.append(a)
 
 
 #acti_journey = journey_optimizer_master(acti_list, 6, 1)
