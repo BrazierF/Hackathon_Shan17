@@ -3,7 +3,7 @@
 
 # In[1]:
 
-import numpy as np
+import numpy as np,json
 import time as time
 
 _columns = {
@@ -63,6 +63,10 @@ class Activity: #activity
     def afficher(self):
          print self.name+' ('+str(self.lat)+','+str(self.lng)+')'
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
+            
     def distance(self,b):
         #return np.sqrt( np.square(self.x_coord-b.x_coord) + np.square(self.y_coord-b.y_coord)) #euclidean distance
         return 1.852 * 60.0 * np.arccos(np.sin(self.lat * np.pi / 180.)*np.sin(b.lat* np.pi / 180.)+np.cos(self.lat* np.pi / 180.)*np.cos(b.lat* np.pi / 180.)*np.cos((self.lng-b.lng)* np.pi / 180.)) #bird-fly distance, in km, using GPS coordinates

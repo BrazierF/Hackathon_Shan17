@@ -6,11 +6,18 @@ Created on Sat Jan 28 22:43:12 2017
 @author: franckyinou
 """
 
-import sql
+import sql,json,sys
 
-def main(text,tMAx,nBest):
+def main(text,tMax,nBest):
     activity_set = recuperer()
-    tMax = 6
-    nBest = 1
-    resultat = journey_optimizer_master(activity_set, tMax, nBest)
-    return resultat
+    resultat = journey_optimizer_master(activity_set, tMax, nBest) 
+    printable  = '['
+    for x in resultat:
+        printable += x.toJSON()+','
+    printable = printable[:-1]
+    print printable+']'
+
+if len(sys.argv) > 1 : 
+    main(sys.argv[1],sys.argv[2],sys.argv[3])
+else:
+     main('',6,1)
