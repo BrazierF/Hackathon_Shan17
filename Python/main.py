@@ -14,12 +14,15 @@ def main(text,tMax,nBest):
     printable  = '['
     #print resultat
     if len(resultat)>0:
-        x = resultat[0]
+        for x in resultat:
+            printable  += '['
             #print x.toJSON()
-        for y in x:
-            printable += y.toJSON()+','
+            for y in x:
+                printable += y.toJSON()+','
+            printable = printable[:-1]
+            printable  += '] ,'
         printable = printable[:-1]
-        print printable+']'
+    print printable+']'
 
 if __name__ == "__main__":
     from sql import *

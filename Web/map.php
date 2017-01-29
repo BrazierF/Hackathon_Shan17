@@ -32,22 +32,17 @@
 	var labelIndex = 0;
 
 	function loadPoints() {
-          var diable = {id: 'diable', lat: 46.540344, lng: -72.753280};
-	  var auger = {id:'auger', lat: 46.540518, lng: -72.748123};
-	  var justice = {id:'justice', lat: 46.541789, lng: -72.745532};
-	  var lido = {id:'lido', lat: 46.561191, lng: -72.744417}
-	  var mcdo_1 = {id: 'burger', lat: 46.556636, lng: -72.751011}
-          var amphi = {id: 'fishing', lat: 51.775322, lng: -101.724806}
-
-	  pts = new Array();
-	  pts[0] = diable;
-	  pts[1] = auger;
-	  pts[2] = justice;
-	  pts[3] = lido;
-	  pts[4] = mcdo_1;
-          //pts[5] = amphi;
-
-          return pts;
+		  pts = 
+			    <?php
+			    $output =array();
+			    if(isset($_POST['request']) && isset($_POST['nb']) && isset($_POST['max_duration'])){			    	
+			    	exec ('/usr/bin/python2.7 /var/www/html/Hackathon/Python/main.py "'. $_POST['request'].' " '. $_POST['max_duration'].' '.$_POST['nb'],$output);
+			    }else{
+			    	exec('/usr/bin/python2.7 /var/www/html/Hackathon/Python/main.py',$output);			    	
+			    }
+			    	//var_dump($output);
+			    echo implode(' ',$output);?>;
+          return pts[0];
         }
 
 
@@ -66,11 +61,13 @@
 	  for(var i = 0; i < pts.length; i++) {
             latlng = new google.maps.LatLng (pts[i].lat,pts[i].lng);
             bounds.extend (latlng);
-	    service.nearbySearch({
+	   /* service.nearbySearch({
 	      location: {lat: pts[i].lat, lng: pts[i].lng},
 	      radius: '30',
-	      name: pts[i].id
-	    }, callback);
+	      //name: pts[i].name
+	      keyword : pts[i].adresse
+	    }, callback);*/
+    	    createMarker(pts[i]);
 	  }
           map.fitBounds (bounds);
 	}
@@ -86,7 +83,8 @@
 	function createMarker(place) {
 	  var marker = new google.maps.Marker({
 	    map: map,
-	    position: place.geometry.location,
+	    //position:place.geometry.location,
+	    position: {lat: place.lat, lng: place.lng},
 	    label: labels[labelIndex++]
 	  });
 
@@ -111,12 +109,171 @@
         <span class="icon-bar"></span>
       </button>
       <a id="display_menu" class="navbar-brand clickable" href="/Hackathon/Web/home.php" >L'indispensable</a>
-      
+      </div>
+      </div>
 </nav>
 </div>
     <div id="map"></div>
-    <FORM>
-      <TEXTAREA name="nom" rows=4 cols=40 placeholder="Que souhaitez-vous faire?"></TEXTAREA>
+    <script type="text/javascript">
+    var toto = 
+    <?php $output =array();
+    	exec('/usr/bin/python2.7 /var/www/html/Hackathon/Python/main.py',$output);
+    	//var_dump($output);
+    	echo implode(' ',$output);?>;
+    	console.log(toto);
+    </script>
+    <FORM method="post" action="">
+      <input type="text" name="request" placeholder="Que souhaitez-vous faire?"/>
+		<ul id="user_inputs">
+						<li><textarea class="user_inputs" data-position="0"
+								id="user_inputs_0" rows="1" cols="50"></textarea></li>
+		</ul>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+		<!--
+		
+		//-->
+		
+		$(function (){
+			mmh('#user_inputs');
+			});
+		
+		function mmh(element){
+		$(element).keydown(function (e) {
+			//console.log(e);
+			//console.log(e.keyCode);
+			// Entree
+			  if ( (e.keyCode == 13 || e.keyCode == 10) && !e.shiftKey) {
+				  var tableau = document.getElementsByClassName('comments_areas');
+				  var indice = tableau.length;
+				  //console.log(indice);
+				  var nvtext = e.currentTarget.value.substring(e.currentTarget.selectionStart);
+				  e.currentTarget.value = e.currentTarget.value.substring(0,e.currentTarget.selectionStart);
+				  $(e.target.parentNode).after('<li><textarea class="comments_areas" data-position="'+indice+'" id="comments_areas_'+indice+'" rows="1" cols="50">'+nvtext+'</textarea></li>');
+				    e.preventDefault();
+				    e.stopPropagation();
+				    mmh('#comments_areas_'+indice);
+					document.getElementById('comments_areas_'+indice).focus();
+			  }
+			  //Retour
+			  if (e.keyCode == 8) {
+				  if(document.getElementsByClassName('comments_areas').length > 1){
+					  if( 0 == e.currentTarget.selectionEnd){
+						  //console.log('#'+e.currentTarget.id);
+						  $(e.currentTarget).parent().prev().find("textarea").focus();
+						  var ancien = $(e.currentTarget).parent().prev().find("textarea").val().length;
+
+						  //console.log("ancien "+ancien);
+						   $(e.currentTarget).parent().prev().find("textarea").val($(e.currentTarget).parent().prev().find("textarea").val()+e.currentTarget.value);
+						   $(e.currentTarget).parent().prev().find("textarea")[0].setSelectionRange(ancien,ancien);
+							  
+							$(e.currentTarget).parent().remove();
+						  e.preventDefault();
+						  e.stopPropagation();
+					  }
+				  }
+			  }
+			  //Suppr
+			  if (e.keyCode == 46) {
+				  if(document.getElementsByClassName('comments_areas').length > 1){
+					  if(e.currentTarget.value.length == e.currentTarget.selectionStart){
+						  var ancien = e.currentTarget.value.length;
+						  e.currentTarget.value = e.currentTarget.value+ ($(e.currentTarget).parent().next().find("textarea").val());
+						  e.currentTarget.setSelectionRange(ancien,ancien);
+						  $(e.currentTarget).parent().next().remove();
+						  if(e.currentTarget.value == 'undefined' ){
+							  $(e.currentTarget).parent().prev().find("textarea").focus();
+							  $(e.currentTarget).parent().remove();
+						  }
+						  e.preventDefault();
+						  e.stopPropagation();
+					  
+					}
+					//console.log('#'+e.currentTarget.id);
+					  /* $(e.currentTarget).parent().next().find("textarea").focus();
+					  $(e.currentTarget).parent().remove();
+					  e.preventDefault();
+					  e.stopPropagation();*/
+				  }
+			  }
+			});
+		}
+
+		$(function(){
+			note_toolpit();
+			});
+		
+		function note_toolpit(){
+			var span = document.getElementsByClassName('comments clickable');
+			for (compteur = 0; compteur < span.length ; compteur++){
+				var com = commentaires[span[compteur].dataset.episode_id];
+			 	//console.log(com);
+			 	com = com.split('|');
+			 	if(com[0].length >0){
+				 	//console.log(span[compteur].dataset.originalTitle);
+				 	span[compteur].dataset.placement="right"
+			 		span[compteur].dataset.originalTitle="<ul style='padding-left:7px;'>";
+				 	for( compt = 0 ; compt <com.length;com++){
+					 	//console.log(com);
+					 	span[compteur].dataset.originalTitle= span[compteur].dataset.originalTitle+'<li>'+com[compt]+'</li>';
+					}
+				 	span[compteur].dataset.originalTitle= span[compteur].dataset.originalTitle+'</ul>';
+			 	}else{
+			 		span[compteur].dataset.placement="top"
+			 		span[compteur].dataset.originalTitle="Notes";
+				 }
+			}
+			
+		}
+		
+		function envoyer_list(){
+			//var donnees = $('#list_comment').serializeArray();
+			var span = document.getElementById('myModalList'); 
+			var donnees =[];
+			var eu = span.getElementsByClassName('comments_areas');
+			for (indice = 0; indice< eu.length;indice++){
+				donnees.push(eu[indice].value);
+			}
+			//console.log(span);
+			var donnees_b = {	
+					//type : span.getAttribute('type'),
+					series_id : span.getAttribute('data-series_id'),
+					series_name : span.getAttribute('data-series_name'),
+					episode_id :  span.getAttribute('data-episode_id'),
+					comments : donnees,			
+			};
+			//var concatarray = $.extend(donnees,donnees_b); 
+			//console.log(donnees_b);
+			$.post( "Ajout_commentaires.php", donnees_b ).done(function( data ) {
+				//console.log(data);
+				var recu = JSON.parse(data);
+				//console.log(recu);
+				//$('body').append(data);
+				var size = recu.size ;
+				//$('#comments_Result').empty();
+				if(!recu.succeed){
+					for(i = 0; i<recu.feedback.length;i++){
+						$('#list_comments').append('<li><div class="alert alert-danger" role="alert">'+recu.feedback[i]+'</div></li>');
+					}	
+					return ;
+				}else{
+					for(i = 0; i<recu.feedback.length;i++){
+						$('#list_comments').append('<li><div class="alert alert-success" role="alert">'+recu.feedback[i]+'</div></li>');
+					}
+					commentaires[span.getAttribute('data-series_id')] = recu.comments;
+					note_toolpit();
+					window.setTimeout("document.getElementById('myModalList').style.display = 'none';", 1500);
+				}
+				});
+		}
+		</script>
+      <label>Nombre de propositions</label>
+      <input name="nb" type="number" value = <?php echo (isset($_POST['nb']) ? $_POST['nb'] : 3 ) ?> min=0 max=10/>
+      <label>Durée du parcours</label>
+      <input name="max_duration" type="number" value=<?php echo (isset($_POST['max_duration']) ? $_POST['max_duration'] : 4 ) ?> min=0 max=10/>
+      <input type="submit"/>
     </FORM>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ETnxWmysf3X-ymcuLCUYwZVGgiCinWk&signed_in=true&libraries=places&callback=initMap" async defer></script>
