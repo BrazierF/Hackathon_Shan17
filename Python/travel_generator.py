@@ -261,11 +261,9 @@ def compute_tsp_tour(activities):
     for i in range(n):
         total_dist = total_dist+dist[int( tour_idx[i]), int( tour_idx[i]+1) % n]
     
-<<<<<<< HEAD
-#    print 'Total_Dist:', total_dist
-=======
+
     #print 'Total_Dist:', total_dist
->>>>>>> 070120557dedbd8c63c3c547dbd5e99a99383af5
+
     #compute tour
     sorted_activities=[None]*n
     for i in range(n):
@@ -273,52 +271,4 @@ def compute_tsp_tour(activities):
         
     return (sorted_activities,total_dist)
 
-np.random.seed(0)
 
-acti_list=[]
-start=time.time()
-typeList=['Parcs',
-          'resto',
-          'Evenements WE',
-          'Patrimoine cult hist']
-for i in range(100):
-    s=100*np.random.rand()
-    w=2*np.random.rand()+0.25
-    t=np.random.randint(0,4)
-    a = Activity('',typeList[t],np.random.rand(),np.random.rand(),s,w)
-    acti_list.append(a)
-
-
-#acti_journey = journey_optimizer_master(acti_list, 6, 1)
-#end=time.time()
-#
-#print end-start
-#
-#journey=acti_journey
-#x=np.zeros(len(journey))
-#y=np.zeros(len(journey))
-#
-#for i in range(len(journey)):
-#    x[i]=journey[i].lat
-#    y[i]=journey[i].lng
-#    
-#plt.plot(x,y,'o-')
-#plt.show()
-
-start=time.time()
-acti_journey=journey_optimizer_stochastic(acti_list, 24, 10)
-end=time.time()
-print end-start
-
-print len(acti_journey)
-
-for journey in acti_journey:
-    x=np.zeros(len(journey))
-    y=np.zeros(len(journey))
-
-    for i in range(len(journey)):
-        x[i]=journey[i].lat
-        y[i]=journey[i].lng
-    
-    plt.plot(x,y,'o-')
-    plt.show()
