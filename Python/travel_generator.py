@@ -137,7 +137,7 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     for a in activity_set:
 #        print _type[a.type]
         activitiesByType[_type[a.type]].append(a)
-        scoreByType[_type[a.type]].append(a.score / 100.0) #dividing scores by 100 makes the softmax more stable
+        scoreByType[_type[a.type]].append(a.score)
         nbPerType[_type[a.type]] = nbPerType[_type[a.type]]+1
     
     #sort each activity set by decreasing score value
@@ -154,15 +154,14 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     activities=[]
 
     start=time.time()
-    nbAppend=0
-    iter=0
+
     while(time.time()-start<0.1):
         acti=[]
         
         #generate one activity per type, using the softmax values as the probability of choosing each element among a class
         sTot=0.0
         tTot=0.0
-        for k in range(nType):
+        for k in np.random.permutation(nType):
             r=np.random.rand()  #cast a random number
             #and decide which element of the set is added
             for i in range(nbPerType[k]):
@@ -174,17 +173,19 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
                     break
                 else:
                     r=r-softmaxByType[k][i]
-
+                
+            if tTot>tMax:
+                #journey is too long : discard
+                break
+        
         if tTot>tMax:
             #journey is too long : discard
             break
         else:
             #journey respects the time constraint
             activities.append((acti,sTot))
-            nbAppend=nbAppend+1    
-        iter=iter+1
     
-#    print iter
+
     #sort journeys by decreasing total score
     nbJourneys=len(activities)
 #    print '\t\t', nbJourneys
