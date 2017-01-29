@@ -188,7 +188,7 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
         else:
             #journey respects the time constraint
             activities.append((acti,sTot))
-        iter=iter+1
+            iter=iter+1
         
     #sort journeys by decreasing total score
     nbJourneys=len(activities)
@@ -212,7 +212,6 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     
     activities=[]
     for i in range(len(activities_sorted)):
-        #print 'Score', activities_sorted[i][1],  'Dist', activities_sorted[i][0][1]
         activities.append(activities_sorted[i][0][0])
     
     
@@ -261,9 +260,6 @@ def compute_tsp_tour(activities):
     for i in range(n):
         total_dist = total_dist+dist[int( tour_idx[i]), int( tour_idx[i]+1) % n]
     
-
-    #print 'Total_Dist:', total_dist
-
     #compute tour
     sorted_activities=[None]*n
     for i in range(n):
