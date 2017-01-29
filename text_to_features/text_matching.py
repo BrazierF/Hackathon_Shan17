@@ -196,6 +196,7 @@ if __name__ == '__main__':
     TAGS = [r[3] for r in res]
     GOOGLE_SCORES = [r[4] for r in res]
 
+    IDS = [id_ for j,id_ in enumerate(IDS) if TAGS[j] is not None]
     NAMES = [id_ for j,id_ in enumerate(NAMES) if TAGS[j] is not None]
     TYPE = [id_ for j,id_ in enumerate(TYPE) if TAGS[j] is not None]
     TAGS = [t for j,t in enumerate(TAGS) if TAGS[j] is not None]
