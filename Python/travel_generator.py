@@ -261,7 +261,11 @@ def compute_tsp_tour(activities):
     for i in range(n):
         total_dist = total_dist+dist[int( tour_idx[i]), int( tour_idx[i]+1) % n]
     
+<<<<<<< HEAD
+#    print 'Total_Dist:', total_dist
+=======
     #print 'Total_Dist:', total_dist
+>>>>>>> 070120557dedbd8c63c3c547dbd5e99a99383af5
     #compute tour
     sorted_activities=[None]*n
     for i in range(n):
