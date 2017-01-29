@@ -71,7 +71,7 @@ def compute_tsp_tour(activities):
     for i in range(n):
         for j in range(i+1,n):
             #dist[i,j] = np.sqrt( np.square(activities[i].x_coord-activities[j].x_coord) + np.square(activities[i].y_coord-activities[j].y_coord))
-            dist[i,j] = activities[i][0].distance[activities[j][0]]
+            dist[i,j] = activities[i].distance(activities[j])
             dist[j,i] = dist[i,j]
 
    
@@ -96,8 +96,8 @@ def compute_tsp_tour(activities):
         current_node=closest_neighbour
     
     #compute tour
-    sorted_activities = [None]*n
-    for i in range(i):
-        sorted_activities=activities[tour_idx[i]]
+    sorted_activities=[None]*n
+    for i in range(n):
+        sorted_activities[i]=activities[int( tour_idx[i])]
         
     return sorted_activities
