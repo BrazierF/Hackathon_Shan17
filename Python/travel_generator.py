@@ -138,7 +138,7 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     for a in activity_set:
 #        print _type[a.type]
         activitiesByType[_type[a.type]].append(a)
-        scoreByType[_type[a.type]].append(a.score / 100.0) #dividing scores by 100 makes the softmax more stable
+        scoreByType[_type[a.type]].append(a.score)
         nbPerType[_type[a.type]] = nbPerType[_type[a.type]]+1
     
     #sort each activity set by decreasing score value
@@ -155,15 +155,14 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
     activities=[]
 
     start=time.time()
-    nbAppend=0
-    iter=0
+
     while(time.time()-start<0.1):
         acti=[]
         
         #generate one activity per type, using the softmax values as the probability of choosing each element among a class
         sTot=0.0
         tTot=0.0
-        for k in range(nType):
+        for k in np.random.permutation(nType):
             r=np.random.rand()  #cast a random number
             #and decide which element of the set is added
             for i in range(nbPerType[k]):
@@ -175,17 +174,19 @@ def journey_optimizer_stochastic(activity_set, tMax, nBest):
                     break
                 else:
                     r=r-softmaxByType[k][i]
-
+                
+            if tTot>tMax:
+                #journey is too long : discard
+                break
+        
         if tTot>tMax:
             #journey is too long : discard
             break
         else:
             #journey respects the time constraint
             activities.append((acti,sTot))
-            nbAppend=nbAppend+1    
-        iter=iter+1
     
-#    print iter
+
     #sort journeys by decreasing total score
     nbJourneys=len(activities)
 #    print '\t\t', nbJourneys
@@ -225,6 +226,7 @@ def compute_tsp_tour(activities):
     tour_flag=[False]*n
     tour_idx=np.zeros(n)
     current_node=0
+    total_dist=0.0
     for i in range(n):
         tour_idx[i]=current_node
         tour_flag[current_node]=True
@@ -238,9 +240,12 @@ def compute_tsp_tour(activities):
             else:
                 closest_neighbour=j
                 closest_distance = dist[current_node, j]
+
         
         current_node=closest_neighbour
+        total_dist=total_dist+closest_distance
     
+    print 'Total_Dist:', total_dist
     #compute tour
     sorted_activities=[None]*n
     for i in range(n):
@@ -250,18 +255,18 @@ def compute_tsp_tour(activities):
 
 np.random.seed(0)
 
-acti_list=[]
-start=time.time()
-typeList=['Parcs',
-          'resto',
-          'Evenements WE',
-          'Patrimoine cult hist']
-for i in range(100):
-    s=100*np.random.rand()
-    w=2*np.random.rand()+0.25
-    t=np.random.randint(0,4)
-    a = Activity('',typeList[t],np.random.rand(),np.random.rand(),s,w)
-    acti_list.append(a)
+#acti_list=[]
+#start=time.time()
+#typeList=['Parcs',
+#          'resto',
+#          'Evenements WE',
+#          'Patrimoine cult hist']
+#for i in range(100):
+#    s=100*np.random.rand()
+#    w=2*np.random.rand()+0.25
+#    t=np.random.randint(0,4)
+#    a = Activity('',typeList[t],np.random.rand(),np.random.rand(),s,w)
+#    acti_list.append(a)
 
 
 #acti_journey = journey_optimizer_master(acti_list, 6, 1)
