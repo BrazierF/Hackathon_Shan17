@@ -125,6 +125,7 @@ def journey_optimizer_master(activity_set, tMax, nBest):
     return compute_tsp_tour(actiSelected)
 
 def journey_optimizer_stochastic(activity_set, tMax, nBest):
+    np.random.seed(0)
     
     nType=4
     #seperate activities by type (so we don't have three restaurants in a proposition)
